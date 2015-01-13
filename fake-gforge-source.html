@@ -1,0 +1,814 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
+
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="Cache-Control" content="max-age=0" />
+
+		
+	<title>HL7GForge > Projects > FHIR > Tracker > FHIR Change Requests > Add new Tracker Item</title>
+	<link rel="shortcut icon" href="/themes/gforge5/favicon.ico" />
+	<link rel="alternate" type="application/rss+xml" title="HL7GForge - FHIR - Activity" href="http://gforge.hl7.org/gf/?action=Rss&amp;section=activity&amp;project_id=106" />
+	<link rel="alternate" type="application/rss+xml" title="HL7GForge - FHIR - Tracker: FHIR Change Requests" href="http://gforge.hl7.org/gf/?action=Rss&amp;section=tracker&amp;ref_id=677&amp;project_id=106" />
+	<link rel="alternate" type="application/rss+xml" title="HL7GForge - FHIR - Tracker: ZZZ-ignore-me-just-testing" href="http://gforge.hl7.org/gf/?action=Rss&amp;section=tracker&amp;ref_id=914&amp;project_id=106" />
+		<link href="/combine.php?type=css&files=/themes/gforge5/GFTheme.css,/themes/gforge5/jquery-ui-theme/jquery-ui.css,/themes/gforge5/viewvc.css,/themes/gforge5/textwiki.css,/themes/gforge5/dialog.css,/themes/gforge5/jquery.meow.css,/themes/gforge5/ddsmoothmenu.css,/themes/gforge5/ddsmoothmenu-v.css,/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="/combine.php?type=javascript&files=/json2.js,/js/gf-common.js,/js/tooltip.js,/tabber.js,/mktree.js,/dialog.js,/jquery.js,/jquery-ui.js,/ddsmoothmenu.js,/ddaccordion.js,/jquery.meow.js,/jcfbtooltip.js,/jquery.tmpl.min.js,/jquery.rating.js,/js/gforge5.js,/ejs_production.js,/tmpl.min.js,/load-image.min.js,/jquery.iframe-transport.js,/jquery.fileupload.js,/jquery.fileupload-ui.js,/html5.uploader.main.js,/jquery.checkboxtree.js,/jquery.slidePanel.min.js,/spin.js,/jquery.tablesorter.js,/jquery.history.js"></script>
+
+<script type="text/javascript">
+ddaccordion.init({
+	headerclass: "expandable", //Shared CSS class name of headers group
+	contentclass: "submenu", //Shared CSS class name of contents group
+	collapseprev: true, //Collapse previous content (so only one open at any time)? true/false 
+	defaultexpanded: [], //index of content(s) open by default [index1, index2, etc] [] denotes no content
+	animatedefault: false, //Should contents open by default be animated into view?
+	persiststate: false, //persist state of opened contents within browser session?
+	toggleclass: ["", "openheader"], //Two CSS classes to be applied to the header when it's collapsed and expanded, respectively ["class1", "class2"]
+	togglehtml: ["suffix", "", ""], //Additional HTML added to the header when it's collapsed and expanded, respectively  ["position", "html1", "html2"] (see docs)
+	animatespeed: "normal" //speed of animation: "fast", "normal", or "slow"
+})
+
+oldload = window.onload;
+function expandableExpandItem(){};
+function docmanExpandTree(){};
+window.onload=function() {
+		if (typeof customonload == 'function') {
+			customonload();
+		}	
+		oldload();convertTrees();window.setTimeout('expandableExpandItem()',100);docmanExpandTree();
+	BrowserDetect.init();
+}
+
+// Localized JS messages
+window.locale = {
+    "fileupload": {
+        "errors": {
+            "maxFileSize": "File is too big.  Maximum allowed size: 268435456 bytes",
+            "minFileSize": "File is too small",
+            "acceptFileTypes": "File type not allowed",
+            "maxNumberOfFiles": "Max number of files exceeded",
+            "uploadedBytes": "Uploaded bytes exceed file size",
+            "emptyResult": "Empty file upload result. Make sure you don't exceed the maximum allowed size: 268435456 bytes"
+        },
+        "error": "Error",
+        "start": "Start",
+        "cancel": "Delete",
+        "destroy": "Empty",
+        "empty": "Empty",
+        "uploadHint": "Hint: Drag files from your computer into this page to attach them.",
+        "uploadHint2": "Hint: This browser does not support drag and drop uploads. To attach files, please use the Attach files button",
+        "attachedFilesTitle": "Attached files",
+        "attachFiles": "Attach files...",
+        "noFiles": "No attached files"
+    }
+};
+
+_ENABLE_UPLOADS = true;
+</script>
+
+</head>
+
+<body>
+
+<script>
+	function getPos(obj, direction) {	/*		direction == 0 ---> Top		direction != 0 ---> Left	*/
+		var cur = 0;
+		if (obj.offsetParent) {
+			do {
+				if (direction == 0)
+					cur += obj.offsetTop;
+				else
+					cur += obj.offsetLeft;
+			} while (obj = obj.offsetParent);
+		}
+		return cur;
+	}
+	function expandFloatingMenu(id, icon) {
+		var menu = document.getElementById(id);
+		var icon = document.getElementById(icon);		
+		var t = getPos(icon, 0);
+		var l = getPos(icon, 1);
+		menu.style.top = ((t + parseInt(icon.height)) + "px");
+		menu.style.left = (l + "px");
+		if (menu.style.visibility == "visible")
+			menu.style.visibility = "hidden";
+		else
+			menu.style.visibility = "visible";
+	}
+	
+</script>
+
+
+
+<div id="header" style="min-width:803px;">
+<script type="text/javascript">
+				$(document).ready(function(){
+				if ($('#quickJumpMenu').html() == ""){
+					$("#quickJumpIcon").click(function(){
+						$.get('/gf/ajax/handler.php?action=GetQuickJumpMenu',
+							function(data){
+								$('#quickJumpMenu').html(data);
+								//quickJumpMenu();
+							}
+						);
+					});
+				} else {
+					//quickJumpMenu();
+				}
+			});
+			
+	        $(document).ready(function() {
+			$(document).on('click', '.discuss', function(e) {
+				discuss(e.target);
+				return false;
+			});
+			setTimeout(checkToasterMessages, 250);
+
+			$('.auto-complete').each(function(index, elem) { addAutoComplete(elem); });
+			
+			$(document).on('click', '.sound-toggle', function(e) {
+				submitSystemSoundSetting(this);	
+				return false;
+			});
+
+			$(document).on('click', '.toggle-table', function(e) {
+				var t = $(this).parent().nextAll('table.collapsible').first();
+				if (t) {
+					$(t).fadeToggle();
+				}
+			});
+			
+        });
+		</script>
+
+<script>
+	$(document).ready(function(){
+	 	$("#notificationssummary").jcfbtooltip({position:'bottom', 'width':'350px' ,method: getPastNotifications});
+		$("#quickjumpmenupopup").jcfbtooltip({position:'bottom', 'width': '180px'});
+		$("#searchmenuicon").jcfbtooltip({position:'bottom', 'width': '250px'});
+
+		$( "#notificationsTemplate" ).template( "notificationtemplate" );
+		$( "#nonotificationsTemplate" ).template( "nonotificationtemplate" );
+		$( "#notificationsAreaTemplate" ).template( "tooltiptemplate" );
+		$( "#quickJumpMenuTemplate" ).template( "jumpmenutemplate" );
+		$( "#searchMenuTemplate" ).template( "searchmenutemplate" );
+
+		var data = {};
+		$.tmpl( "tooltiptemplate", data ).appendTo( $('#jcapp-notificationssummary') );
+		$.tmpl( "jumpmenutemplate", data ).appendTo( $('#jcapp-quickjumpmenupopup') );
+		$.tmpl( "searchmenutemplate", data ).appendTo( $('#jcapp-searchmenuicon') );
+		
+
+		$(document).on('click', '.sound-toggle', function(e) {
+			submitSystemSoundSetting(this);	
+			return false;
+		});
+
+		$(document).on('click', '.my-message-wall"', function(e) {
+			window.location = '/gf/my/messagewall';
+			return false;
+		});
+
+		$(':not(#jcapp-notificationssummary)').click(function(ev) {
+			var str_class = '';
+			if ($(this).attr("class")) {
+				str_class = $(this).attr("class");
+			}
+
+			if ($(this).parents('#jcapp-notificationssummary').length == 0 && str_class.indexOf("notifications") == -1 && str_class.indexOf('sound-toggle') == -1) {
+		    $('#jcapp-notificationssummary').hide();
+		    $('#jcapp-notificationssummary').attr('visibility-status', 'hidden');
+			}
+
+			if ($(this).parents('#jcapp-notificationssummary').length > 0) {
+				ev.stopPropagation();
+				if (str_class.indexOf('sound-toggle') != -1) {
+					submitSystemSoundSetting(this);
+				}
+			}
+		});
+	
+	
+		$(':not(#jcapp-quickjumpmenupopup)').click(function(ev) {
+			var str_class = '';
+			if ($(this).attr("class")) {
+				str_class = $(this).attr("class");
+			}
+
+			if ($(this).parents('#jcapp-notificationssummary').length == 0 && str_class.indexOf("quickjumpmenuicon") == -1) {
+		    $('#jcapp-quickjumpmenupopup').hide();
+		    $('#jcapp-quickjumpmenupopup').attr('visibility-status', 'hidden');
+			}
+
+			if ($(this).parents('#jcapp-notificationssummary').length > 0) {
+				ev.stopPropagation();
+			}
+
+		});
+
+
+		$(':not(#jcapp-searchmenuicon)').click(function(ev) {
+			var str_class = '';
+			if ($(this).attr("class")) {
+				str_class = $(this).attr("class");
+			}
+
+			if ($(this).parents('#jcapp-searchmenuicon').length == 0 && $(this).parents('.tooltip-content').length == 0 && str_class.indexOf("SearchByIDMenu") == -1) {
+		    $('#jcapp-searchmenuicon').hide();
+		    $('#jcapp-searchmenuicon').attr('visibility-status', 'hidden');
+			}
+			
+			if ($(this).parents('#jcapp-searchmenuicon').length > 0) {
+				ev.stopPropagation();
+			}
+
+		});
+	
+		
+	});  
+</script>
+
+	
+
+			<h1 id="logo"><a href="/">MyGforge Home</a></h1>
+			<ul id="mainNav" class="selected"><li class="start"></li>
+				<li><a  href="/gf/">Home</a></li>
+				<li><a  href="/gf/my/">My Stuff</a></li>
+				<li><a  href="/gf/search/">Search</a></li>
+				<li class="selected"><a class="selected" href="/gf/project/">Projects</a></li></ul>	<img class="quickjumpmenuicon" id="quickjumpmenupopup" onclick="$('#jcapp-quickjumpmenupopup').toggle();" title="QuickJump menu" alt="" class="quickJumpMenu" id="quickJumpIcon" src="/themes/gforge5/images/blue/quickjump_off.gif" style="float:left;padding-right:10px; position:relative; top:0px; cursor: pointer;" onmouseover="this.src='/themes/gforge5/images/blue/quickjump_on.gif';" onmouseout="this.src='/themes/gforge5/images/blue/quickjump_off.gif';" />
+
+<div id="quickjumpmenuarea" style="display: none;">
+</div>
+
+
+<script id="quickJumpMenuTemplate" type="text/x-jquery-tmpl">
+
+	<div class="tooltip-title">
+		Quick Jump	</div>
+	
+	<div class="tooltip-settings">
+	</div>
+
+	<div class="tooltip-content">
+		<table class='quickJumpMenu' summary=''><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/register/?action=ProjectAdd">Add New Project</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/reports/">My Reports</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/">My Stuff</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/dashboard/">Dashboard</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/activity/">Activity</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/gantt/">Gantt</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/my/?action=LatestForumMessages">Forums</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/">FHIR</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/docman/">&nbsp;&nbsp;Docman</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/frs/">&nbsp;&nbsp;Frs</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/news/">&nbsp;&nbsp;News</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/scmsvn/">&nbsp;&nbsp;Scmsvn</a></td></tr><tr><td class='quickJumpMenu'><a class='quickJumpMenu' href="/gf/project/fhir/tracker/">&nbsp;&nbsp;Tracker</a></td></tr></select></form>	</div>
+
+</script>
+
+
+<script id="searchMenuTemplate" type="text/x-jquery-tmpl">
+
+	<div class="tooltip-title">
+		Search By Id	</div>
+	
+	<div class="tooltip-settings">
+	</div>
+
+	<div class="tooltip-content">
+			<form id="searchbyid" name="searchbyid" class="SearchByIDMenu" action="/gf/search/?action=SearchById" method="POST">
+			<table class="SearchByIDMenu" summary="" style="width: 100%">
+				<tr>
+					<td class="SearchByIDMenu">
+						<select name="searchtype" class="SearchByIDMenu">
+							<option value="forummessage">Forum Message</option><option value="trackeritem" selected>Tracker Item</option><option value="frsrelease">FRS Release</option>						</select>
+					</td>
+					<td class="SearchByIDMenu">
+						<strong>Item Id:&nbsp;</strong><input type="text" size="4" name="searchid" id="quicksearchid" value="" />
+					</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td colspan="2">
+						<div class="buttondiv"><div class="button"><a href="javascript:;" style="color: #FFFFFF;" onclick="document.getElementById('searchbyidsubmit').click();">Search</a><span></span></div><span style="display:none;"><input type="submit" id="searchbyidsubmit" name="searchbyidsubmit" onclick="" /></span></div>					</td>
+				</tr>
+			</table>
+			</form>
+	</div>
+
+</script>
+
+<img title="Search by ID" alt="Search by ID" class="SearchByIDMenu" id="searchmenuicon" src="/themes/gforge5/images/blue/searchbyid_off.gif" style="float:left; position:relative; top:0px;" onmouseover="this.src='/themes/gforge5/images/blue/searchbyid_on.gif';" onmouseout="this.src='/themes/gforge5/images/blue/searchbyid_off.gif';" onclick="$('#jcapp-searchmenuicon').toggle(); $('#quicksearchid').focus(); window.scrollTo(0, 0);" />	 &nbsp;
+	 <img class="notifications" id="notificationssummary" jccontent="notificationsarea" onclick="$('#jcapp-notificationssummary').toggle();" src="/themes/gforge5/images/notifications_off.png" onMouseOver="tooltip('Show past notifications'); this.src='/themes/gforge5/images/notifications_on.png';" onmouseout="tooltipexit(); this.src='/themes/gforge5/images/notifications_off.png'" style="position:relative; top:0px;" /> 	
+<a href="http://gforgegroup.com/es/help.php?section=project-tracker" target="_blank" style='top:0px;'><img title='Help' alt='Help' class='HelpMenu' id='helpIcon' src='/themes/gforge5/images/blue/help_off.gif' style='position:relative; top:0px;' onmouseover='this.src="/themes/gforge5/images/blue/help_on.gif";' onmouseout='this.src="/themes/gforge5/images/blue/help_off.gif";'/></a><div id="notificationsarea" style="display: none;">
+</div>
+
+<script id="notificationsAreaTemplate" type="text/x-jquery-tmpl">
+
+	<div class="tooltip-title">
+		<table width="100%">
+			<tr>
+				<td width="50%">
+					Past Notifications				</td>
+				<td align="right" width="50%">
+						<img class="sound-toggle" src="/themes/gforge5/images/chat/sound_off_white_small.png" system-sound-setting="N" onMouseOver="tooltip('Toogle notification sound on/off')" onmouseout="tooltipexit()" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="tooltip-settings">
+	</div>
+	<div class="tooltip-content">
+		<ul class="notificationlist">
+		</ul>
+	</div>
+	<div id="notificationsseemore" class="notificationsseemore">
+		<table style="width: 100%; padding: 2px; margin: 0px;">
+			<tr>
+				<td align="left" width="50%">
+					<span id="notifications-seemore">
+						<a href="javascript:;" onclick="getPastNotifications(false);">
+							See more						</a>
+					</span>
+				</td>
+				<td align="right" width="50%">
+					<span id="notifications-seeall">
+						<a href="javascript:;" onclick="window.location = '/gf/my/messagewall';">
+							See all notifications						</a>
+					</span>
+				</td>
+			</tr>
+		</table>
+		&nbsp;
+	</div>
+
+</script>
+
+<script id="notificationsTemplate" type="text/x-jquery-tmpl">
+	<li>
+		<table>
+			<tr style="border-bottom: solid 1px black;">
+				<td style="margin-right: 4px; padding: 2px" valign="top">
+					<img style="width: 35px;" src="${avatar}" />
+				</td>
+				<td valign="top">{{html body}}<br/>${post_date}
+				</td>
+			</tr>
+		</table>
+		<hr class="notificationlistdivider"></hr>
+	</li>
+</script>
+
+<script id="nonotificationsTemplate" type="text/x-jquery-tmpl">
+	<li>
+		<br />
+		<span style="text-align: center;"><h3>You have received no notifications</h3></span>
+	</li>
+</script>
+
+
+
+
+		<div id="login" nowrap="nowrap">Logged in: josh_mandel | <a href="/gf/account/?action=Logout">Log out</a>		</div>
+		
+		<div class="clear"></div>		
+</div>
+<div id="container">
+	<div id="left">
+		
+<h1 class='navLabel'>Project Menu </h1>
+<div class='expandableMenu' ><a class="menuitem regular"  href="/gf/project/fhir/">Summary</a>
+<a class="menuitem regular"  href="/gf/project/fhir/admin/">Admin</a>
+<a class="menuitem regular"  href="/gf/project/fhir/reporting/">Reporting</a>
+<a class="menuitem regular"  href="/gf/project/fhir/search/">Search</a>
+<a class="menuitem regular"  href="/gf/project/fhir/messagewall/">Message Wall</a>
+<a class="menuitem selected" style="margin-bottom:0px;"  href="/gf/project/fhir/tracker/">Tracker (2)</a>
+<script>function expandableExpandItem() {ddaccordion.expandone('expandable',0);}</script><ul>
+				<li ><a class="menuitem expandable" href="/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=677">FHIR Change Requests</a></li>
+<div class='submenu'><ul>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=677">Browse</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerItemAdd&amp;tracker_id=677">New Tracker Item</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerQueryBrowse&amp;tracker_id=677">Query</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=EmailGateway&amp;tracker_id=677">E-mail Gateway</a></li>
+						<li><a  href="/gf/?action=Monitor&amp;section=tracker&amp;ref_id=677&amp;notify=1&amp;redirect_to=%2Fgf%2Fproject%2Ffhir%2Ftracker%2F%3Faction%3DTrackerItemAdd%26tracker_id%3D677">Monitor tracker</a></li>
+						<li><a  href="/gf/project/fhir/usersmonitoring/?action=UsersMonitoringBrowse&amp;section=tracker&amp;ref_id=677&amp;description=FHIR+Change+Requests&amp;type=item&amp;return_to=%2Fgf%2Fproject%2Ffhir%2Ftracker%2F%3Faction%3DTrackerItemAdd%26tracker_id%3D677">Users monitoring Tracker</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerExtraFieldElementTransitionBrowse&amp;tracker_id=677">Workflow rules</a></li>
+						<li><a class="finalitem" href="/gf/project/fhir/tracker/admin/?action=TrackerEdit&amp;tracker_id=677">Admin</a></li></ul></div>
+
+				<li ><a class="menuitem expandable" href="/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=914">ZZZ-ignore-me-just-testing</a></li>
+<div class='submenu'><ul>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=914">Browse</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerItemAdd&amp;tracker_id=914">New Tracker Item</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerQueryBrowse&amp;tracker_id=914">Query</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=EmailGateway&amp;tracker_id=914">E-mail Gateway</a></li>
+						<li><a  href="/gf/?action=Monitor&amp;section=tracker&amp;ref_id=914&amp;notify=1&amp;redirect_to=%2Fgf%2Fproject%2Ffhir%2Ftracker%2F%3Faction%3DTrackerItemAdd%26tracker_id%3D677">Monitor tracker</a></li>
+						<li><a  href="/gf/project/fhir/usersmonitoring/?action=UsersMonitoringBrowse&amp;section=tracker&amp;ref_id=914&amp;description=ZZZ-ignore-me-just-testing&amp;type=item&amp;return_to=%2Fgf%2Fproject%2Ffhir%2Ftracker%2F%3Faction%3DTrackerItemAdd%26tracker_id%3D677">Users monitoring Tracker</a></li>
+						<li><a  href="/gf/project/fhir/tracker/?action=TrackerExtraFieldElementTransitionBrowse&amp;tracker_id=914">Workflow rules</a></li>
+						<li><a class="finalitem" href="/gf/project/fhir/tracker/admin/?action=TrackerEdit&amp;tracker_id=914">Admin</a></li></ul></div>
+</ul><a class="menuitem regular"  href="/gf/project/fhir/docman/">Docs (7)</a>
+<a class="menuitem regular"  href="/gf/project/fhir/news/">Blog (3)</a>
+<a class="menuitem regular"  href="/gf/project/fhir/frs/">Releases (1)</a>
+<a class="menuitem regular"  href="/gf/project/fhir/scmsvn/">SVN</a>
+<h1 class="navLabel_bottom">&nbsp;</h1></div>		<div class="clear"></div>
+	</div>
+	<div id="right">
+			<div class="contentNav">
+			<p id="crumbs"><a href="/">Home</a> » <a href="/gf/project/">Projects</a> » <a href="/gf/project/fhir/">FHIR</a> » <a href="/gf/project/fhir/tracker/">Tracker</a> » <a href="/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=677">FHIR Change Requests</a> » Add new Tracker Item</p>
+			<div class="clear"></div>
+		</div>
+		<div class="main">
+						<h1 class="project-title">FHIR</h1>
+        <script language="javascript" type="text/javascript" src="/datetimepicker.js"></script>
+
+    	<!-- Code for the file upload widget -->
+		<script language="javascript" type="text/javascript">
+			$(document).ready(function() {
+				var upload_url = '/gf/upload/?section=&amp;ref_id=0&amp;_file_upload_to_tmp=1&amp;_file_upload_form_hash=2015-01-13-21-45-39-dc5b2';
+				if (_ENABLE_UPLOADS) {
+					FileUploadWidgetInit('widget_container', 'fileupload', upload_url, []);
+				}
+			});
+
+			function setUploadWidgetParameter() {
+				// No parameters need to be set.
+			}
+
+			_UPLOAD_UPLOADED_FILES = {};
+
+
+			_FILE_UPLOAD_FORM_HASH = '2015-01-13-21-45-39-dc5b2';
+		</script>
+<br /><p>
+Use this mechanism to submit formal request for change to the FHIR specification.  All changes will be reviewed and considered by the appropriate HL7 work group.  Approved changes will be scheduled for a future release of the specification.  Please be as complete as possible in your description of the desired change as well as the rationale for the change and the impact of not making the change.</p>
+<br />
+<p>
+	<strong>New Tracker Item</strong>
+</p>
+<form action="/gf/project/fhir/tracker/?action=TrackerItemAddAction" method="post" enctype="multipart/form-data" name="TrackerItemAdd">
+	<input type="hidden" name="tracker_id" value="677"  />
+	<table style="border: none; min-width: 640px;" >
+				<tr>
+			<td colspan="2"><strong>Summary</strong><span class="required">*</span><br />
+				<input type="text" name="summary" value="" size="80" maxlength="255" /></td>
+		</tr>
+
+	
+			<!-- Start Extra Fields Rendering -->
+			<tr><td width="50%" valign="top"><strong>Assignee:</strong><br />
+		<select name="assigned_to[]" multiple="multiple" size="10">
+		<option value="100" selected="selected">Nobody</option>
+			<option value="413" >Alexander Henket</option>
+			<option value="414" >Andy Stechishin</option>
+			<option value="2717" >Bo Dagnall</option>
+			<option value="3120" >Brad Arndt</option>
+			<option value="3114" >Brett Marquard</option>
+			<option value="2909" >Brian Postlethwaite</option>
+			<option value="2691" >Brian  Pech</option>
+			<option value="2992" >Chi Tran</option>
+			<option value="2897" >Chris Millet</option>
+			<option value="2725" >Claude Nanjo</option>
+			<option value="121" >Craig Parker</option>
+			<option value="133" >Dale Nelson</option>
+			<option value="548" >Dave Shaver</option>
+			<option value="2582" >David Hay</option>
+			<option value="2902" >Duane Bender</option>
+			<option value="3044" >Duane DeCouteau</option>
+			<option value="2210" >Elaine Ayres</option>
+			<option value="2711" >Eric Haas</option>
+			<option value="2529" >Ewout Kramer</option>
+			<option value="3063" >Frederic Laurent</option>
+			<option value="3194" >Gary Dickinson</option>
+			<option value="150" >Grahame Grieve</option>
+			<option value="3064" >Hans Buitendijk</option>
+			<option value="3140" >Harry Solomon</option>
+			<option value="386" >Helen  Drijfhout</option>
+			<option value="163" >Hugh Glover</option>
+			<option value="2970" >James Agnew</option>
+			<option value="2976" >Jason Mathews</option>
+			<option value="475" >Jean-Henri Duteau</option>
+			<option value="436" >Joginder Madra</option>
+			<option value="1098" >John Hatem</option>
+			<option value="1078" >John Moehrke</option>
+			<option value="2751" >Jonathan Whitby</option>
+			<option value="2904" >Joshua Mandel</option>
+			<option value="3080" >Kathleen Connor</option>
+			<option value="162" >Kathleen Connor</option>
+			<option value="2720" >Line Saele</option>
+			<option value="105" >Lloyd McKenzie</option>
+			<option value="2263" >Lorraine Constable</option>
+			<option value="438" >Lynn Laakso</option>
+			<option value="3163" >Mark Kramer</option>
+			<option value="3009" >Marten Smits</option>
+			<option value="2362" >Melva Peters</option>
+			<option value="2921" >Michael Ekaireb</option>
+			<option value="565" >Michael van der Zel</option>
+			<option value="3097" >Mollie Ullman-Cullere</option>
+			<option value="3116" >Nagesh Bashyam</option>
+			<option value="3070" >Nikolay Ryzhikov</option>
+			<option value="240" >Patrick Loyd</option>
+			<option value="2672" >Paul Knapp</option>
+			<option value="3074" >Paul Knapp!</option>
+			<option value="2729" >Ratnesh Sahay</option>
+			<option value="3024" >Reuben Daniels</option>
+			<option value="2953" >Richard Ettema</option>
+			<option value="241" >Richard Kavanagh</option>
+			<option value="2576" >Rick Geimer</option>
+			<option value="898" >Rik Smithies</option>
+			<option value="247" >Robert Hausam</option>
+			<option value="3099" >Roman Radomski</option>
+			<option value="2951" >Scott Bolte</option>
+			<option value="3038" >Sean McIlvenna</option>
+			<option value="3102" >Sebastian Bojanowski</option>
+			<option value="3073" >Stephen Chu</option>
+			<option value="305" >Wendy Huang</option>
+			<option value="2354" >Wendy Huang</option>
+			<option value="106" >Woody Beeler</option>
+		</select></td>
+		   </tr>
+			<tr>
+						<td width="50%" valign="top"><strong>Status</strong>:<br /><select name="extra_field[2415]" >
+				<option value="7035" selected="selected" >Submitted</option>
+				<option value="13096">Triaged</option>
+				<option value="14137">Waiting for Input</option>
+				<option value="13095">Rejected</option>
+				<option value="13610">Explained -nochange</option>
+				<option value="13091">Approved</option>
+				<option value="13093">Applied</option>
+				<option value="13094">Published</option></select></td>
+							<td>&nbsp;</td>
+							</tr>
+							<tr>
+					<td width="100%" colspan="2" valign="top"><strong>url</strong>:<br /><input type="text" name="extra_field[3842]" value="" size="150" maxlength="150"/></td> </tr>
+			</tr>
+			<tr>
+						<td width="50%" valign="top"><strong>Category</strong>:<br /><select name="extra_field[3626]" >
+				<option value="100">None</option>
+				<option value="13097">Typo</option>
+				<option value="13098">Correction</option>
+				<option value="14635">Clarification</option>
+				<option value="13099" selected="selected" >Enhancement</option></select></td>
+						<td width="50%" valign="top"><strong>Reviewing Work Group(s)</strong>:<br />
+		<select name="extra_field[3628][]" multiple="multiple" size="10">
+		<option value="100" selected="selected">None</option>
+			<option value="14030" >FHIR Tooling/Pubs</option>
+			<option value="13108" >FHIR Core Team</option>
+			<option value="14636" >FHIR Test Servers</option>
+			<option value="13123" >FHIR Mgmt Group</option>
+			<option value="13124" >FHIR Governance Board</option>
+			<option value="14028" >CGIT</option>
+			<option value="13106" >Clinical Genomics</option>
+			<option value="14310" >Clinical Decision Support</option>
+			<option value="14311" >Clinical Quality Information</option>
+			<option value="13110" >Devices</option>
+			<option value="13107" >DICOM</option>
+			<option value="13109" >Financial Mgmt</option>
+			<option value="13125" >Health Standards Integration</option>
+			<option value="13111" >ITS</option>
+			<option value="13112" >Infrastructure &amp; Messaging</option>
+			<option value="13113" >Modeling &amp; Methodology</option>
+			<option value="13114" >Orders &amp; Observations</option>
+			<option value="13115" >Patient Administration</option>
+			<option value="13116" >Patient Care</option>
+			<option value="13117" >Pharmacy</option>
+			<option value="13118" >Public Health</option>
+			<option value="13119" >Publishing</option>
+			<option value="13120" >Security</option>
+			<option value="14029" >Structured Documents</option>
+			<option value="13121" >Templates</option>
+			<option value="13122" >Vocabulary</option>
+			<option value="14639" >US Realm Task Force</option>
+		</select></td>
+			</tr>
+			<tr>
+						<td width="50%" valign="top"><strong>Resource(s)</strong>:<br />
+		<select name="extra_field[3807][]" multiple="multiple" size="10">
+		<option value="100" selected="selected">None</option>
+			<option value="14031" >AdverseReaction_old</option>
+			<option value="14032" >Alert</option>
+			<option value="14033" >AllergyIntolerance</option>
+			<option value="14034" >Appointment</option>
+			<option value="14035" >AppointmentResponse</option>
+			<option value="14637" >Basic</option>
+			<option value="14037" >Binary</option>
+			<option value="14638" >Bundle</option>
+			<option value="14038" >CarePlan</option>
+			<option value="14039" >ClaimResponse</option>
+			<option value="14649" >ClinicalAssessment</option>
+			<option value="14648" >Communication</option>
+			<option value="14647" >CommunicationRequest</option>
+			<option value="14040" >Composition</option>
+			<option value="14041" >ConceptMap</option>
+			<option value="14042" >Condition</option>
+			<option value="14043" >Conformance</option>
+			<option value="14044" >Contract</option>
+			<option value="14646" >Contraindication</option>
+			<option value="14045" >Coverage</option>
+			<option value="14645" >DataElement</option>
+			<option value="14046" >Device</option>
+			<option value="14644" >DeviceComponent</option>
+			<option value="14643" >DeviceMetric</option>
+			<option value="14047" >DeviceObservationReport_old</option>
+			<option value="14642" >DeviceUseRequest</option>
+			<option value="14641" >DeviceUseStatement</option>
+			<option value="14048" >DiagnosticOrder</option>
+			<option value="14049" >DiagnosticReport</option>
+			<option value="14050" >DocumentManifest</option>
+			<option value="14051" >DocumentReference</option>
+			<option value="14640" >EligibilityRequest</option>
+			<option value="14654" >EligibilityResponse</option>
+			<option value="14052" >Encounter</option>
+			<option value="14656" >EnrollmentRequest</option>
+			<option value="14653" >EnrollmentResponse</option>
+			<option value="14652" >EpisodeOfCare</option>
+			<option value="14651" >ExplanationOfBenefit</option>
+			<option value="14650" >ExtensionDefinition</option>
+			<option value="14053" >FamilyHistory</option>
+			<option value="14657" >Goal</option>
+			<option value="14054" >Group</option>
+			<option value="14658" >HealthcareService</option>
+			<option value="14655" >ImagingObjectSelection</option>
+			<option value="14055" >ImagingStudy</option>
+			<option value="14056" >Immunization</option>
+			<option value="14057" >ImmunizationRecommendation</option>
+			<option value="14058" >InstitutionalClaim</option>
+			<option value="14059" >List</option>
+			<option value="14060" >Location</option>
+			<option value="14061" >Media</option>
+			<option value="14062" >Medication</option>
+			<option value="14063" >MedicationAdministration</option>
+			<option value="14064" >MedicationDispense</option>
+			<option value="14065" >MedicationPrescription</option>
+			<option value="14066" >MedicationStatement</option>
+			<option value="14067" >MessageHeader</option>
+			<option value="14668" >NamingSystem</option>
+			<option value="14661" >NutritionOrder</option>
+			<option value="14068" >Observation</option>
+			<option value="14312" >OperationDefinition</option>
+			<option value="14069" >OperationOutcome</option>
+			<option value="14666" >OralHealthClaim</option>
+			<option value="14070" >Order</option>
+			<option value="14071" >OrderResponse</option>
+			<option value="14072" >Organization</option>
+			<option value="14073" >Other</option>
+			<option value="14074" >Patient</option>
+			<option value="14665" >PaymentNotice</option>
+			<option value="14659" >PaymentReconciliation</option>
+			<option value="14663" >PendedRequest</option>
+			<option value="14662" >Person</option>
+			<option value="14679" >PharmacyClaim</option>
+			<option value="14075" >Practitioner</option>
+			<option value="14076" >Procedure</option>
+			<option value="14660" >ProcedureRequst</option>
+			<option value="14667" >ProfessionalClaim</option>
+			<option value="14077" >Profile</option>
+			<option value="14078" >Provenance</option>
+			<option value="14079" >Query_old</option>
+			<option value="14081" >Questionnaire</option>
+			<option value="14080" >QuestionnaireAnswers</option>
+			<option value="14664" >Readjudicate</option>
+			<option value="14082" >ReferralRequest</option>
+			<option value="14083" >RelatedPerson</option>
+			<option value="14669" >Reversal</option>
+			<option value="14670" >RiskAssessment</option>
+			<option value="14036" >Schedule</option>
+			<option value="14671" >SearchParameter</option>
+			<option value="14084" >SecurityEvent</option>
+			<option value="14085" >Slot</option>
+			<option value="14086" >Specimen</option>
+			<option value="14672" >StatusRequest</option>
+			<option value="14675" >StatusResponse</option>
+			<option value="14674" >Subscription</option>
+			<option value="14087" >Substance</option>
+			<option value="14088" >Supply</option>
+			<option value="14676" >SupportingDocumentation</option>
+			<option value="14089" >ValueSet</option>
+			<option value="14673" >VisionClaim</option>
+			<option value="14677" >VisionPrescription</option>
+		</select></td>
+						<td width="50%" valign="top"><strong>HTML Page</strong>:<br />
+		<select name="extra_field[3808][]" multiple="multiple" size="10">
+		<option value="100" selected="selected">None</option>
+			<option value="14694" >(profiles)</option>
+			<option value="14693" >(NA)</option>
+			<option value="14134" >(many)</option>
+			<option value="14298" >(methodology)</option>
+			<option value="14136" >(schemas/schematrons)</option>
+			<option value="14684" >backboneelement</option>
+			<option value="14091" >base-definitions_old</option>
+			<option value="14685" >bundle</option>
+			<option value="14092" >change</option>
+			<option value="14093" >comparison</option>
+			<option value="14680" >compatibility</option>
+			<option value="14094" >conformance-rules</option>
+			<option value="14095" >credits</option>
+			<option value="14096" >datatypes</option>
+			<option value="14106" >documentation</option>
+			<option value="14097" >documents</option>
+			<option value="14681" >domainresource</option>
+			<option value="14098" >downloads</option>
+			<option value="14099" >dstu_old</option>
+			<option value="14100" >ehr-fm</option>
+			<option value="14682" >element</option>
+			<option value="14683" >elementdefinition</option>
+			<option value="14101" >extensibility</option>
+			<option value="14102" >extras</option>
+			<option value="14103" >formats</option>
+			<option value="14104" >history</option>
+			<option value="14105" >http</option>
+			<option value="14689" >iglist</option>
+			<option value="14107" >implementation</option>
+			<option value="14135" >index</option>
+			<option value="14108" >integrated-examples</option>
+			<option value="14109" >json</option>
+			<option value="14110" >license</option>
+			<option value="14111" >managing</option>
+			<option value="14112" >messaging</option>
+			<option value="14113" >narrative</option>
+			<option value="14688" >operations</option>
+			<option value="14114" >overview</option>
+			<option value="14115" >profilelist</option>
+			<option value="14687" >profiling</option>
+			<option value="14116" >pushpull</option>
+			<option value="14117" >references</option>
+			<option value="14686" >resource</option>
+			<option value="14118" >resources</option>
+			<option value="14119" >search</option>
+			<option value="14120" >security</option>
+			<option value="14121" >security-labels</option>
+			<option value="14122" >services</option>
+			<option value="14123" >summary</option>
+			<option value="14124" >support</option>
+			<option value="14125" >terminologies</option>
+			<option value="14126" >terminologies-conceptmaps</option>
+			<option value="14127" >terminologies-systems</option>
+			<option value="14128" >terminologies-v2</option>
+			<option value="14129" >terminologies-v3</option>
+			<option value="14130" >terminologies-valuesets</option>
+			<option value="14692" >terminology-service</option>
+			<option value="14691" >timelines</option>
+			<option value="14131" >toc</option>
+			<option value="14690" >todo</option>
+			<option value="14132" >usecases</option>
+			<option value="14133" >xml</option>
+		</select></td>
+			</tr>
+			<tr>
+					<td width="50%" colspan="1" valign="top"><strong>Section number</strong>:<br /><input type="text" name="extra_field[3631]" value="" size="10" maxlength="20"/></td>
+					<td>&nbsp;</td>
+			</tr>
+			<!-- End Extra Fields Rendering -->	
+		<tr>
+			<td colspan="2"><strong>Details</strong><span class="required">*</span><br />
+			<textarea name="details" rows="8" cols="60"></textarea>
+<script type="text/javascript">//<![CDATA[
+window.CKEDITOR_BASEPATH='/ckeditor/';
+//]]></script>
+<script type="text/javascript" src="/ckeditor/ckeditor.js?t=D03G5XL"></script>
+<script type="text/javascript">//<![CDATA[
+CKEDITOR.replace('details', {"docType":"<!DOCTYPE html PUBLIC \"-\/\/W3C\/\/DTD XHTML 1.0 Transitional\/\/EN\" \"http:\/\/www.w3.org\/TR\/xhtml1\/DTD\/xhtml1-transitional.dtd\">","startupMode":"wysiwyg","toolbar":[["Source"],["Bold"],["Italic"],["Underline"],["Strike"],["-"],["Link"],["Unlink"],["Anchor"],["About"]],"width":700,"on":{"instanceReady":function (ev) {
+			this.dataProcessor.writer.setRules( 'p',
+				{
+					indent: false,
+					breakBeforeOpen: true,
+					breakAfterOpen: true,
+					breakBeforeClose: false,
+					breakAfterClose: true
+				});
+		}}});
+//]]></script>
+<div id="GFCKAllowedElements" style="visibility:hidden"><p>Allowed html elements:<span style="color:rgb(90, 90, 137)"> p  a[href]  em  u  strike  strong  br </span></p></div><script type="text/javascript">
+				var ckeditor = CKEDITOR.instances['details'];
+				ckeditor.on('mode', function() {
+					setUserPreference('chkeditormode', this.mode);
+					item = document.getElementById('GFCKAllowedElements');
+					if (this.mode == 'source') {
+						item.style.visibility = 'visible';
+					} else{
+						item.style.visibility = 'hidden';
+					}});
+				</script>			</td>
+		</tr>
+				
+		<tr>
+			<td colspan="2"><div class="upload_widget"></div></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<br /><input type="checkbox" name="monitor" value="" checked  /><strong>Monitor: Send me updates about this Tracker Item via email</strong><br /><br />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="buttondiv"><div class="button"><a href="javascript:;" style="color: #FFFFFF;" onclick="document.getElementById('__button1__').click();">Add</a><span></span></div><span style="display:none;"><input type="submit" id="__button1__" name="submit" onclick="" /></span></div>				<div class="buttondiv"><div class="button"><a href="javascript:;" style="color: #FFFFFF;" onclick="document.getElementById('__button2__').click();">Cancel</a><span></span></div><span style="display:none;"><input type="button" id="__button2__" name="cancel" onclick="window.location = '/gf/project/fhir/tracker/?action=TrackerItemBrowse&amp;tracker_id=677'; " /></span></div>			</td>
+		</tr>
+	</table>
+</form>
+
+	<center>
+		<br /><br /><a href="http://gforgegroup.com/"><img src="/themes/gforge5/images/gforge-as-logo-large.png" height="43" width="130" title="Powered By GForge&reg; Collaborative Development Environment " border="0" /></a><br /><br />
+	</center>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+<div id="fileupload_wrapper" style="display: none;">
+	<div id="widget_container">
+	</div>
+</div>
+
+</body>
+</html>
+

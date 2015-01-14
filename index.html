@@ -13,7 +13,7 @@
     CSV File: <input type="file" id="csv" name="csvfile"/> <br>
     Min comment #: <input type="text" id="min-comment" value="1" size="3"/><br>
     Max comment #: <input type="text" id="max-comment" value="1" size="3"/><br>
-    Comment prefix: <input type="text" id="comment-prefix" value="Ballot Comment" /><br>
+    Comment prefix: <input type="text" id="comment-prefix" value="Ballot Comment #" /><br>
     <button DISABLED id="create">Create issues</button>
 
     <iframe id="submitter"></iframe>
@@ -74,35 +74,17 @@
       "Tracker Category",
       "Resource(s)",
       "page(s)", 
-      // "Priority", // I don't see what this maps to
-      // "Disposition", // I don't see what this maps to
+      // "Priority", // I don't see what this maps to in GForge
+      // "Disposition", // I don't see what this maps to in GForge
       ];
 
       fieldMaps = {
-        "Section Number":  [
-        FormElementCalled("Section Number"),
-        ValFiller
-        ],
-        "Page or Section URL":  [
-        FormElementCalled("url"), 
-        ValFiller
-        ],
-        "Resource(s)": [
-        FormElementCalled("Resource(s)"),
-        SelectFiller
-        ],
-        "page(s)": [
-        FormElementCalled("HTML Page"),
-        SelectFiller
-        ],
-        "Disposition WG": [
-        FormElementCalled("Reviewing Work Group(s)"),
-        SelectFiller
-        ],
-        "Tracker Category": [
-        FormElementCalled("Category"),
-        SelectFiller
-        ]
+        "Section Number":  [ FormElementCalled("Section number"), ValFiller ],
+        "Page or Section URL":  [ FormElementCalled("url"), ValFiller ],
+        "Resource(s)": [ FormElementCalled("Resource(s)"), SelectFiller ],
+        "page(s)": [ FormElementCalled("HTML Page"), SelectFiller ],
+        "Disposition WG": [ FormElementCalled("Reviewing Work Group(s)"), SelectFiller ],
+        "Tracker Category": [ FormElementCalled("Category"), SelectFiller ]
       };
 
       function processOneIssue(){
@@ -120,11 +102,7 @@
         }
 
         var form = populateNewForm(issue);
-
-        // for some reason DOM changes aren't reliable without a clone step
-        // (e.g. removeAttr("selected") calls don't take effect yet).
         iframeBody.append(form);
-        //console.log("filled as", form);
         window.formCopy = form;
         $("#submitter").attr("onLoad", "processOneIssue()");
         form.submit();
@@ -142,11 +120,13 @@
         .stringify(importantFields, null, 2)
         .replace(new RegExp("\n", "g"), "<br>\n");
 
+
         details = $("textarea[name='details']", blank);
-        details.val(content);
+        details[0].innerHTML = content;
+        //console.log("Set deatils as", content, details, details[0].innerHTML);
 
         var comment = $("#comment-prefix").val();
-        $("input[name='summary']", blank).val(comment + "#"+issue["Comment Number"])
+        $("input[name='summary']", blank).val(comment + issue["Comment Number"])
 
         if (issue["Tracker Category"] == ""){
           issue["Tracker Category"] = "None";
@@ -162,6 +142,8 @@
           //console.log("Tried filling", field, val, field.val());
         });
 
+        // for some reason DOM changes aren't reliable without a clone step
+        // (e.g. removeAttr("selected") calls don't take effect yet).
         return blank.cloneNode(true); 
       }
 
@@ -200,16 +182,13 @@
           el = $("strong", form).filter(function(i,e){
             return $(e).text() == text;
           })[0];
+          //console.log("FEC", text, el);
           return $(el).next().next();
         }
       }
 
-      function TextValueFiller(elementGetter, value) {
-        elt = elementGetter();
-        elt.value
-      }
-
       function ValFiller(field, value){
+        //console.log("ValFller", field, value);
         field.val(value);
       }
 
@@ -230,11 +209,11 @@
         $("button").attr("disabled", "true");
         var min = parseInt($("#min-comment").val());
         var max = parseInt($("#max-comment").val());
-        console.log("Restrinctnig from", min, max, results.data.length);
         window.issues = results.data.filter(function(i){
           var cnum = parseInt(i["Comment Number"]);
           return cnum >= min && cnum <= max; 
         });
+        console.log("Restrictnig from", min, "to", max, "yielded", issues.length, "issues");
         processed = 0;
         processOneIssue();
       });

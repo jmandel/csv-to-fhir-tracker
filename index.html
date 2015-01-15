@@ -10,10 +10,13 @@
   </head>
 
   <body>
-    CSV File: <input type="file" id="csv" name="csvfile"/> <br>
+    <!--
+    CSV File:
+    <input type="file" id="csv" name="csvfile"/> <br>
+    -->
     Min comment #: <input type="text" id="min-comment" value="1" size="3"/><br>
     Max comment #: <input type="text" id="max-comment" value="1" size="3"/><br>
-    Comment prefix: <input type="text" id="comment-prefix" value="Ballot Comment #" /><br>
+    Comment prefix: <input type="text" id="comment-prefix" value="Jan 2015 For-comment Ballot Respone #" /><br>
     <button DISABLED id="create">Create issues</button>
 
     <iframe id="submitter"></iframe>
@@ -22,6 +25,7 @@
     <script src="papaparse.js"></script>
 
     <script>
+      var commentsFile = "january-2015-comments.csv";
       var gforge = "http://gforge.hl7.org";
       //var gforge = "http://localhost:9999";
       var tracker = "/gf/project/fhir/tracker/?action=TrackerItemAdd&tracker_id="; 
@@ -45,10 +49,13 @@
       "In person resolution requested",
       "Comment grouping",
       "Disposition WG",
+      "Owning WG",
+      //"Tracker Item",
       "Tracker Category",
       "Resource(s)",
       "page(s)", 
       "Priority",
+      "Grahame's Comments",
       "Disposition",
       "Disposition Comment",
       "Disposition Date", 
@@ -70,10 +77,10 @@
       var structuredFields = [
       "Section Number",  
       "Page or Section URL", 
-      "Disposition WG",
+      "Owning WG",
       "Tracker Category",
       "Resource(s)",
-      "page(s)", 
+      "page(s)" 
       // "Priority", // I don't see what this maps to in GForge
       // "Disposition", // I don't see what this maps to in GForge
       ];
@@ -83,7 +90,7 @@
         "Page or Section URL":  [ FormElementCalled("url"), ValFiller ],
         "Resource(s)": [ FormElementCalled("Resource(s)"), SelectFiller ],
         "page(s)": [ FormElementCalled("HTML Page"), SelectFiller ],
-        "Disposition WG": [ FormElementCalled("Reviewing Work Group(s)"), SelectFiller ],
+        "Owning WG": [ FormElementCalled("Reviewing Work Group(s)"), SelectFiller ],
         "Tracker Category": [ FormElementCalled("Category"), SelectFiller ]
       };
 
@@ -112,7 +119,9 @@
         var blank = form.cloneNode(true);
 
         importantFields = bodyFields.reduce(function(dict, v){
-          dict[v] = issue[v];
+          if (issue[v] && issue[v].trim() !== "") {
+            dict[v] = issue[v];
+          }
           return dict;
         }, {});
 
@@ -128,7 +137,7 @@
         var comment = $("#comment-prefix").val();
         $("input[name='summary']", blank).val(comment + issue["Comment Number"])
 
-        if (issue["Tracker Category"] == ""){
+        if (issue["Tracker Category"] == "Non-Tracker" || !issue["Tracker Category"]){
           issue["Tracker Category"] = "None";
         }
 
@@ -152,8 +161,8 @@
         $("button").removeAttr("disabled");
       }
 
-      var source = gforge+tracker+tid;
-      //var source = "fake-gforge-source.html";
+      //var source = gforge+tracker+tid;
+      var source = "gforge-ballot-template.html";
       $.ajax(source).done(function(newp){
         page = newp;
         form = $("form", page)[0].cloneNode(true);
@@ -161,20 +170,19 @@
         form.setAttribute("action", gforge + form.getAttribute("action"));
         $("div", form).remove();
         $("script", form).remove();
+        $("input[name='tracker_id']", form).val(tid);
         console.log("got the blank form");
         loadOne();
       });
 
-      $("#csv").change(function(){
-        console.log("Parsing");
-        Papa.parse($("#csv")[0].files[0], {
-          header: true,
-          complete: function(results) {
-            console.log("Parsed");
-            window.results = results;
-            loadOne();
-          }
-        });
+      Papa.parse(commentsFile, {
+        header: true,
+        download: true,
+        complete: function(results) {
+          console.log("Parsed");
+          window.results = results;
+          loadOne();
+        }
       });
 
       function FormElementCalled(text){

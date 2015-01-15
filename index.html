@@ -16,7 +16,7 @@
     -->
     Min comment #: <input type="text" id="min-comment" value="1" size="3"/><br>
     Max comment #: <input type="text" id="max-comment" value="1" size="3"/><br>
-    Comment prefix: <input type="text" id="comment-prefix" value="Jan 2015 For-comment Ballot Respone #" /><br>
+    Comment prefix: <input type="text" id="comment-prefix" value="Jan 2015 Ballot Comment #" /><br>
     <button DISABLED id="create">Create issues</button>
 
     <iframe id="submitter"></iframe>
@@ -29,7 +29,7 @@
       var gforge = "http://gforge.hl7.org";
       //var gforge = "http://localhost:9999";
       var tracker = "/gf/project/fhir/tracker/?action=TrackerItemAdd&tracker_id="; 
-      var tid = "914";
+      var tid = "920";
 
       var page = null;
       var form = null;
@@ -39,9 +39,7 @@
       var processed = 0;
 
       var bodyFields = [
-      "Comment Number",
-      "Section Number", 
-      "Page or Section URL", 
+      //"Comment Number",
       "Vote and Type",
       "Existing Wording",
       "Proposed Wording",
@@ -49,11 +47,7 @@
       "In person resolution requested",
       "Comment grouping",
       "Disposition WG",
-      "Owning WG",
       //"Tracker Item",
-      "Tracker Category",
-      "Resource(s)",
-      "page(s)", 
       "Priority",
       "Grahame's Comments",
       "Disposition",
@@ -118,16 +112,17 @@
       function populateNewForm(issue){
         var blank = form.cloneNode(true);
 
+        var newline = "\n"
         importantFields = bodyFields.reduce(function(dict, v){
+          var extra = "";
           if (issue[v] && issue[v].trim() !== "") {
-            dict[v] = issue[v];
+            extra = newline + "<strong>" + v + "</strong>:" +
+                    newline + issue[v] + newline;
           }
-          return dict;
-        }, {});
+          return dict + extra;
+        }, "");
 
-        content = JSON
-        .stringify(importantFields, null, 2)
-        .replace(new RegExp("\n", "g"), "<br>\n");
+        content = importantFields.replace(new RegExp("\n", "g"), "<br>\n");
 
 
         details = $("textarea[name='details']", blank);
@@ -219,7 +214,8 @@
         var max = parseInt($("#max-comment").val());
         window.issues = results.data.filter(function(i){
           var cnum = parseInt(i["Comment Number"]);
-          return cnum >= min && cnum <= max; 
+          var cat = i["Tracker Category"] !== "Non-Tracker";
+          return cat && cnum >= min && cnum <= max; 
         });
         console.log("Restrictnig from", min, "to", max, "yielded", issues.length, "issues");
         processed = 0;

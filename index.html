@@ -17,7 +17,7 @@
     Min comment #: <input type="text" id="min-comment" value="1" size="3"/><br>
     Max comment #: <input type="text" id="max-comment" value="1" size="3"/><br>
     Comment prefix: <input type="text" id="comment-prefix" value="Jan 2015 Ballot Comment #" /><br>
-    <button DISABLED id="create">Create issues</button>
+    <button id="create">Create issues!</button>
 
     <iframe id="submitter"></iframe>
 
@@ -29,7 +29,7 @@
       var gforge = "http://gforge.hl7.org";
       //var gforge = "http://localhost:9999";
       var tracker = "/gf/project/fhir/tracker/?action=TrackerItemAdd&tracker_id="; 
-      var tid = "920";
+      var tid = "677";
 
       var page = null;
       var form = null;
@@ -185,8 +185,14 @@
           el = $("strong", form).filter(function(i,e){
             return $(e).text() == text;
           })[0];
-          //console.log("FEC", text, el);
-          return $(el).next().next();
+            //console.log("FEC", text, el);
+
+          if (text === "Category")
+              return $(el).next().next().next();
+            else
+                 return $(el).next().next();
+          //while ($(el).text() != "input" && $(el).text() != "select" && $(el).text() != "textarea") el = $(el).next();
+		  //return el;
         }
       }
 

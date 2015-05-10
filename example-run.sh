@@ -1,3 +1,5 @@
+/path/to/chromedriver &
+
 GFORGE_USERNAME=fhir_bot \
 GFORGE_PASSWORD=redacted \
 python drive-gforge.py \

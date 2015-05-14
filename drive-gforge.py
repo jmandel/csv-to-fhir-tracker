@@ -735,7 +735,6 @@ try:
     driver = webdriver.Remote("http://localhost:9515", {})
     login()
     load_one_spreadsheet(args.slug, input_comments, creates=args.do_creates, updates=args.do_updates)
-except:
+finally:
     with open(args.logfile, "w") as output_log:
         json.dump(old_log, output_log, indent=2)
-    raise

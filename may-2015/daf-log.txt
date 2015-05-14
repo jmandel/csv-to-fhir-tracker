@@ -1,0 +1,68 @@
+Namespace(csvfile='may-2015/daf.csv', do_creates=True, do_updates=False, logfile='progress.log.json', slug='daf', tracker='677')
+['Comment Number', 'Ballot', 'Chapter', 'Section', 'Page #', 'Line #', 'Artifact ID', 'Resource(s)', 'HTML Page name(s)', 'URL', 'Vote and Type', 'Sub-category', 'Tracker #', 'Pubs', 'Existing Wording', 'Proposed Wording', 'Ballot Comment', 'Summary', 'In person resolution requested', 'Comment grouping', 'Schedule', 'Triage Note', 'Disposition WG', 'Disposition', 'Disposition Comment\nor\nRetract/Withdraw details', 'Disposition/Retract/ Withdrawal Date', 'Mover / seconder', 'For ', 'Against', 'Abstain', 'Retracted / Withdrawn', 'Disposition External Organization', 'Responsible Person', 'Change Applied', 'Substantive Change', 'Submitted By', 'Organization', 'On behalf of', 'Commenter Email', 'Submitter Tracking ID', 'Referred To', 'Received From', 'Notes']
+Loading spreadsheet daf
+Handling comment: daf/5
+... created daf/5 as tracker #8125
+Handling comment: daf/23
+... created daf/23 as tracker #8126
+Handling comment: daf/24
+... created daf/24 as tracker #8127
+Handling comment: daf/26
+... created daf/26 as tracker #8128
+Handling comment: daf/27
+... created daf/27 as tracker #8129
+Handling comment: daf/28
+... created daf/28 as tracker #8130
+Handling comment: daf/29
+... created daf/29 as tracker #8131
+Handling comment: daf/32
+... created daf/32 as tracker #8132
+Handling comment: daf/33
+... created daf/33 as tracker #8133
+Handling comment: daf/34
+... created daf/34 as tracker #8134
+Handling comment: daf/35
+... created daf/35 as tracker #8135
+Handling comment: daf/36
+... created daf/36 as tracker #8136
+Handling comment: daf/45
+... created daf/45 as tracker #8137
+Handling comment: daf/48
+... created daf/48 as tracker #8138
+Handling comment: daf/51
+... created daf/51 as tracker #8139
+Handling comment: daf/59
+... created daf/59 as tracker #8140
+Handling comment: daf/64
+... created daf/64 as tracker #8141
+Handling comment: daf/96
+... created daf/96 as tracker #8142
+Handling comment: daf/106
+... created daf/106 as tracker #8143
+Handling comment: daf/143
+... created daf/143 as tracker #8144
+Handling comment: daf/154
+... created daf/154 as tracker #8145
+Handling comment: daf/166
+... created daf/166 as tracker #8146
+Handling comment: daf/167
+... created daf/167 as tracker #8147
+Handling comment: daf/170
+... created daf/170 as tracker #8148
+Handling comment: daf/171
+... created daf/171 as tracker #8149
+Handling comment: daf/181
+... created daf/181 as tracker #8150
+Handling comment: daf/186
+... created daf/186 as tracker #8151
+Handling comment: daf/187
+... created daf/187 as tracker #8152
+Handling comment: daf/188
+... created daf/188 as tracker #8153
+Handling comment: daf/192
+... created daf/192 as tracker #8154
+Handling comment: daf/210
+... created daf/210 as tracker #8155
+Handling comment: daf/211
+... created daf/211 as tracker #8156
+

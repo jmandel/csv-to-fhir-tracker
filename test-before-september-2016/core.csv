@@ -1,0 +1,5 @@
+Comment Number,Ballot,Chapter,Section,Page #,Line #,Artifact ID,Resource(s),HTML Page name(s),URL,Vote and Type,Sub-category,Tracker #,Pubs,Existing Wording,Proposed Wording,Ballot Comment,Summary,In person resolution requested,Comment grouping,Schedule,Triage Note,Disposition WG,Disposition,"Disposition Comment
+or
+Retract/Withdraw details",Disposition/Retract/ Withdrawal Date,Mover / seconder,For ,Against,Abstain,Retracted / Withdrawn,Disposition External Organization,Responsible Person,Change Applied,Substantive Change,Submitted By,Organization,On behalf of,Commenter Email,Submitter Tracking ID,Referred To,Received From,Notes
+1,FHIR Core,,,,,,,,http://test-url,Neg-Mj,,10638,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2,FHIR Core,,,,,,,,,Neg-Mj,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -3,15 +3,13 @@
 GFORGE_USERNAME=fhir_bot
 GFORGE_PASSWORD=redacted
 
-# First, regenerate the selection options from any existing issue (e.g. 1063)
+# First, regenerate the selection options from any existing issue (e.g. 10000)
 
-python ../drive-gforge.py --generate-select-options-from 1063
+python ../drive-gforge.py --generate-select-options-from 10000
 
 
-# Then, load ballot comments into test tracker (1043)
+# Then, load ballot comments into test tracker (1052)
 python drive-gforge.py \
-    --tracker 1043 \
-    --csvfile core.csv \
-    --slug core \
-    --do-updates \
-    --do-creates
+    --tracker 1052 \
+    --csvfile core-new.csv \
+    --slug core

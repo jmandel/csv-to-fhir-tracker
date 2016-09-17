@@ -18,44 +18,15 @@ import json
 import time
 
 
-workgroup_map = {
-"n/a": "None",
-"cbcc": "CBCC",
-"cds": "Clinical Decision Support",
-"cgen": "Clinical Genomics",
-"cg": "Clinical Genomics",
-"cgit": "CGIT",
-"fhir core": "FHIR Core Team",
-"fhir tooling/pubs": "FHIR Tooling/Pubs",
-"fhir tooling/publishing": "FHIR Tooling/Pubs",
-"fm": "Financial Mgmt",
-"fmg": "FHIR Mgmt Group",
-"ii": "Imaging Integration",
-"inm": "Infrastructure & Messaging",
-"its": "ITS",
-"mnm": "Modeling & Methodology",
-"oo": "Orders & Observations",
-"pa": "Patient Administration",
-"pc": "Patient Care",
-"pharmacy": "Pharmacy",
-"pher": "Public Health",
-"hcd": "Devices",
-"project": "Project",
-"sd": "Structured Documents",
-"security": "Security",
-"soa": "Service Oriented Architecture",
-"us realm": "US Realm Task Force",
-"vocab": "Vocabulary"
-}
-
 
 validate_fields = {
+ 'On behalf of': ('Real Submitter',None),
  'Comment grouping': ('Group',None),
  'Resource(s)': ('Resource(s)',None),
  'Ballot': ('Specification',None),
  'Schedule': ('Schedule',None),
  'HTML Page name(s)': ('HTML Page(s)',None),
- 'Disposition WG': ('Reviewing Work Group(s)',workgroup_map)
+ 'Disposition WG': ('Reviewing Work Group', None)
 }
 
 #  Manual tweaks
@@ -99,13 +70,6 @@ def read_comments(inputs):
                     for found_val in re.split('\s*,\s*', c[k]):
                         if not found_val: continue
                         found_val = found_val.lower()
-                        if mapper:
-                            try:
-                                found_val = mapper[found_val]
-                            except:
-                                load_errors.append( "No mapping from %s, %s, '%s' (%s, %s)"%(
-                                    k, v, found_val, c['slug'], c['Comment Number']))
-                                pass
                         if found_val.lower() not in select_options[v]:
                             load_errors.append("Can't find %s (col %s) in %s  (%s, %s)"%(
                                 found_val, k, v,  c['slug'], c['Comment Number']))
@@ -122,23 +86,10 @@ def read_comments(inputs):
 def followup_comment(item):
     ret = """Vote: #%s - %s"""%(item["Comment Number"], item["Vote and Type"])
 
-    if item["Submitted By"] or item["Organization"]:
-        org = item["Organization"]
-        if org:
-            org = "(%s)"%org
-        ret += "\nSubmitted by: %s  %s"%(item["Submitted By"], org)
-
-    if item["On behalf of"]  or item["Commenter Email"]:
-        email = item["Commenter Email"]
-        if email:
-            email = "(%s)"%email
-        ret += "\nOn behalf of %s %s"%(item["On behalf of"], email)
-
     if item["In person resolution requested"] :
         ret += "\nIn person: %s"%(item["In person resolution requested"])
 
-    if item["Ballot Comment"]:
-        ret += "\n---\nComment:\n%s"%(item["Ballot Comment"])
+    ret += issue_details(item)
 
     return ret
 
@@ -155,7 +106,7 @@ def issue_details(item):
         email = item["Commenter Email"]
         if email != "":
             email = "(%s)"%email
-        ret += "\nOn behalf of %s %s"%(item["On behalf of"], email)
+        ret += "\nOn behalf of: %s %s"%(item["On behalf of"], email)
 
     if item["Existing Wording"]:
         ret += "\nExisting Wording: %s"%item["Existing Wording"]
@@ -166,11 +117,12 @@ def issue_details(item):
     if item["Ballot Comment"]:
         ret += "\n---\nComment:\n%s"%(item["Ballot Comment"])
 
+    if item["Summary"]:
+        ret += "\n---\nSummary:\n%s"%(item["Summary"])
+
+
     return ret
 
-
-
-# In[447]:
 
 def select_all(select_elt, values, field, item):
     for v in values:
@@ -239,7 +191,7 @@ def set_in_person(item):
 def set_workgroup(item):
     if not item['Disposition WG']:
         return
-    workgroup = select_box("Reviewing Work Group(s)")
+    workgroup = select_box("Reviewing Work Group")
     desired_selections = item['Disposition WG']
     desired_selections = re.split('\s*,\s*', desired_selections)
     ss = []
@@ -263,6 +215,12 @@ def set_specification(item):
     if item["Ballot"]:
         s = item["Ballot"]
         select_all(select_box("Specification"),[s], "Ballot", item)
+
+def set_submitter(item):
+    if item["On behalf of"]:
+        s = item["On behalf of"]
+        select_all(select_box("Real Submitter"),[s], "On behalf of", item)
+
 
 def set_url(item):
     if item["URL"]:
@@ -305,9 +263,10 @@ def update_tracker_item(item):
 
 def create_tracker_item(item):
     navigate_to_add(tracker_id)
-    summary_val = "2016September %s #%s "%(item["slug"], item["Comment Number"])
+    summary_val = ""
     if item["Summary"]:
-        summary_val += " - %s"%item["Summary"]
+        summary_val += "%s - "%item["Summary"]
+    summary_val += "2016-09 %s #%s "%(item["slug"], item["Comment Number"])
     summary_field = driver.find_element(By.NAME, "summary")
     summary_field.send_keys(summary_val)
 
@@ -323,6 +282,7 @@ def create_tracker_item(item):
     select_all(select_box("Status"), ["Triaged"], "Status", item)
     set_ballot_weight(item)
     set_workgroup(item)
+    set_submitter(item)
     set_url(item)
     category = item["Sub-category"]
     vote = item["Vote and Type"]
@@ -420,7 +380,7 @@ parser.add_argument('--slug', help='short name or "slug" to use in referring to 
 parser.add_argument('--do-updates', action='store_true', help='perform updates on issues that have existing tracker items')
 parser.add_argument('--do-creates', action='store_true', help='perform creates on issues that have no existing tracker items')
 
-parser.add_argument('--generate-select-options-from',  help='regenerate select options from a tracker item')
+parser.add_argument('--generate-select-options', action='store_true', help='regenerate select options from a known FHIR ballot issue')
 
 if len(sys.argv)==1:
     parser.print_help()
@@ -433,11 +393,10 @@ tracker_id = args.tracker
 edit_url = "http://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemEdit&tracker_item_id=%s"
 add_url = "http://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemAdd&tracker_id=%s"
 
-driver = webdriver.Remote("http://localhost:9515", {})
-
-if args.generate_select_options_from:
+if args.generate_select_options:
+    driver = webdriver.Remote("http://localhost:9515", {})
     login()
-    navigate_to_edit(args.generate_select_options_from)
+    navigate_to_edit("10000")
     select_options = regenerate_select_validators()
     options = open("select_options.json", "w")
     options.write(json.dumps(select_options, indent=2))
@@ -454,9 +413,15 @@ except: pass
 
 
 input_comments = read_comments([{'slug': args.slug, 'file': args.csvfile}])[args.slug]
+if not (args.do_creates or args.do_updates):
+    print("No work to do -- just validated.")
+    sys.exit(0)
+
+driver = webdriver.Remote("http://localhost:9515", {})
 try:
     login()
     load_one_spreadsheet(args.slug, input_comments, creates=args.do_creates, updates=args.do_updates)
 finally:
     with open(args.logfile, "w") as output_log:
         json.dump(old_log, output_log, indent=2)
+

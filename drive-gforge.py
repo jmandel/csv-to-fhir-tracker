@@ -18,6 +18,8 @@ import json
 import time
 
 
+# disposition -> ballot resolution
+# disposition comment or retract/withdarw -> resolution comment
 
 validate_fields = {
  'On behalf of': ('Real Submitter',None),
@@ -26,7 +28,17 @@ validate_fields = {
  'Ballot': ('Specification',None),
  'Schedule': ('Schedule',None),
  'HTML Page name(s)': ('HTML Page(s)',None),
- 'Disposition WG': ('Reviewing Work Group', None)
+ 'Disposition WG': ('Reviewing Work Group', None),
+ 'Disposition': ('Ballot Resolution', None)
+}
+
+ballot_values = {
+ 'core': '2016-Sept Core',
+ 'ccda': '2016-Sept CCDA',
+ 'cqf': '2016-Sept CQF',
+ 'daf': '2016-Sept DAF',
+ 'daf-r': '2016-Sept DAF-R',
+ 'qicore': '2016-Sept QI-Core'
 }
 
 #  Manual tweaks
@@ -145,7 +157,14 @@ def input_box(label):
     label_elt = driver.find_element(By.XPATH, '//strong[text()="'+label+'"]')
     return label_elt.find_element(By.XPATH, '../input')
 
+def input_iframediv(label):
+    label_elt = driver.find_element(By.XPATH, '//strong[text()="'+label+'"]')
+    return label_elt.find_element(By.XPATH, '../div')
+
+
 def fill_iframe(divid, text):
+    divid = divid.replace("[", "\[")
+    divid = divid.replace("]", "\]")
     followup_iframe = WebDriverWait(driver, 5).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "#"+divid+" iframe")))
     followup_box = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "body[contenteditable='true']")))
     followup_box.clear()
@@ -170,16 +189,30 @@ def submit_item():
     feedback = driver.find_element(By.CSS_SELECTOR, "span.feedback")
     return re.findall("(\d+)",feedback.text)[0]
 
+def set_disposition_status(item):
+    mydiv = input_iframediv("Resolution")
+    fill_iframe(mydiv.get_attribute('id') , item["Disposition Comment or Retract/Withdraw details"])
+
+def set_disposition(item):
+    resolution = select_box("Ballot Resolution")
+    resolution.select_by_visible_text(item["Disposition"])
+
+
+
 def set_ballot_weight(item):
     ballot_weight = select_box("Ballot-weight")
     current_selection = ballot_weight.all_selected_options[0].text
     desired_selection = item['Vote and Type']
+    label = None
     if desired_selection.startswith("A") and current_selection.startswith("None"):
-        ballot_weight.select_by_visible_text("Affirmative")
+        label = "Affirmative"
     elif desired_selection.endswith("Mi") and not current_selection.endswith("Major"):
-        ballot_weight.select_by_visible_text("Negative-Minor")
-    elif desired_selection.endswith("Mj"):
-        ballot_weight.select_by_visible_text("Negative-Major")
+        label = "Negative-Minor"
+    elif desired_selection.endswith("Mj") or desired_selection == "NEG":
+        label = "Negative-Major"
+
+    if label:
+        ballot_weight.select_by_visible_text(label)
 
 def set_in_person(item):
     in_person = select_box("In-Person?")
@@ -196,9 +229,7 @@ def set_workgroup(item):
     desired_selections = re.split('\s*,\s*', desired_selections)
     ss = []
     for s in desired_selections:
-        try:
-            ss.append(workgroup_map[s.lower()])
-        except: pass
+        ss.append(s.lower())
     select_all(workgroup, ss, "Workgroup", item)
 
 def set_resource_and_pages(item):
@@ -239,9 +270,6 @@ def navigate_to_edit(item_id):
 def navigate_to_add(tracker_id):
     navigate_to(add_url%tracker_id, "TrackerItemAdd")
 
-
-# In[500]:
-
 def update_tracker_item(item):
     navigate_to_edit(item['Tracker #'])
     set_ballot_weight(item)
@@ -250,6 +278,7 @@ def update_tracker_item(item):
     set_url(item)
     set_resource_and_pages(item)
     fill_followup(followup_comment(item))
+    select_all(select_box("Ballot"),[ballot_values[args.slug]], "Ballot", item)
 
     current_spec = select_box("Specification").all_selected_options[0].text
     if (current_spec != item["Ballot"]):
@@ -283,7 +312,10 @@ def create_tracker_item(item):
     set_ballot_weight(item)
     set_workgroup(item)
     set_submitter(item)
+    set_disposition(item)
+    set_disposition_status(item)
     set_url(item)
+    select_all(select_box("Ballot"),[ballot_values[args.slug]], "Ballot", item)
     category = item["Sub-category"]
     vote = item["Vote and Type"]
     if not category:
@@ -329,14 +361,15 @@ def load_one_spreadsheet(slug, comments, creates=True, updates=True):
                 result = update_tracker_item(item)
                 outcomes['updates'].append(result)
                 log_note("... updated %s as tracker #%s"%(comment_id, result))
+                old_log['completed'].append(comment_id)
 
         else:
             if creates:
                 result = create_tracker_item(item)
                 outcomes['creates'].append(result)
                 log_note("... created %s as tracker #%s"%(comment_id, result))
+                old_log['completed'].append(comment_id)
 
-        old_log['completed'].append(comment_id)
 
     return outcomes
 

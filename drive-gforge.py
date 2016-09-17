@@ -38,6 +38,7 @@ ballot_values = {
  'cqf': '2016-Sept CQF',
  'daf': '2016-Sept DAF',
  'daf-r': '2016-Sept DAF-R',
+ 'sdc': '2016-Sept SDC',
  'qicore': '2016-Sept QI-Core'
 }
 
@@ -190,14 +191,16 @@ def submit_item():
     return re.findall("(\d+)",feedback.text)[0]
 
 def set_disposition_status(item):
+    if not item["Disposition Comment or Retract/Withdraw details"]:
+        return
     mydiv = input_iframediv("Resolution")
     fill_iframe(mydiv.get_attribute('id') , item["Disposition Comment or Retract/Withdraw details"])
 
 def set_disposition(item):
+    if not item["Disposition"]:
+        return
     resolution = select_box("Ballot Resolution")
-    resolution.select_by_visible_text(item["Disposition"])
-
-
+    select_all(resolution, [item["Disposition"]], "Disposition", item)
 
 def set_ballot_weight(item):
     ballot_weight = select_box("Ballot-weight")

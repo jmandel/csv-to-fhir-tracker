@@ -39,7 +39,8 @@ ballot_values = {
  'daf': '2016-Sept DAF',
  'daf-r': '2016-Sept DAF-R',
  'sdc': '2016-Sept SDC',
- 'qicore': '2016-Sept QI-Core'
+ 'qicore': '2016-Sept QI-Core',
+ 'fluentpath': '2016-Sept Fluentpath'
 }
 
 #  Manual tweaks

@@ -1,2 +1,3 @@
 python ../drive-gforge.py  --tracker 677  --csvfile sdc.csv  --slug sdc  --do-updates
 python ../drive-gforge.py  --tracker 677  --csvfile sdc.csv  --slug sdc  --do-creates
+python ../drive-gforge.py     --tracker 677     --csvfile core.csv  --slug core  --do-creates --do-updates

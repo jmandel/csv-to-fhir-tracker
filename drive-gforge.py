@@ -84,8 +84,8 @@ def read_comments(inputs):
                         if not found_val: continue
                         found_val = found_val.lower()
                         if found_val.lower() not in select_options[v]:
-                            load_errors.append("Can't find %s (col %s) in %s  (%s, %s)"%(
-                                found_val, k, v,  c['slug'], c['Comment Number']))
+                            load_errors.append("Can't find %s (col %s) in %s"%(
+                                found_val, k, v))
     #load_errors = set(load_errors)
     if load_errors:
         for e in load_errors:
@@ -242,7 +242,9 @@ def set_resource_and_pages(item):
         select_all(select_box("Resource(s)"), rs, "Resource(s)", item)
 
     if item["HTML Page name(s)"]:
-        select_all(select_box("HTML Page(s)"), [item["HTML Page name(s)"]], "HTML Page name(s)", item)
+        select_all(select_box("HTML Page(s)"), [
+                    s.lower() for s in re.split('\s*,\s*', item["HTML Page name(s)"])
+                ], "HTML Page name(s)", item)
 
 
 def set_specification(item):

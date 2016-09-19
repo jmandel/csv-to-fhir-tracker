@@ -3,3 +3,6 @@ python ../drive-gforge.py  --tracker 677  --csvfile sdc.csv  --slug sdc  --do-cr
 python ../drive-gforge.py     --tracker 677     --csvfile core.csv  --slug core  --do-creates --do-updates
 python ../drive-gforge.py     --tracker 677     --csvfile cqf.csv  --slug cqf  --do-creates --do-updates
 python ../drive-gforge.py     --tracker 677     --csvfile daf-r.csv  --slug daf-r --do-updates --do-creates
+python ../drive-gforge.py     --tracker 677     --csvfile fluentpath.csv  --slug fluentpath  --do-creates --do-updates
+python ../drive-gforge.py     --tracker 677     --csvfile ccda.csv  --slug ccda --do-creates --do-updates
+python ../drive-gforge.py     --tracker 677     --csvfile daf.csv  --slug daf --do-creates --do-updates

@@ -6,3 +6,4 @@ python ../drive-gforge.py     --tracker 677     --csvfile daf-r.csv  --slug daf-
 python ../drive-gforge.py     --tracker 677     --csvfile fluentpath.csv  --slug fluentpath  --do-creates --do-updates
 python ../drive-gforge.py     --tracker 677     --csvfile ccda.csv  --slug ccda --do-creates --do-updates
 python ../drive-gforge.py     --tracker 677     --csvfile daf.csv  --slug daf --do-creates --do-updates
+python ../drive-gforge.py     --tracker 677     --csvfile qicore.csv  --slug qicore  --do-updates --do-creates

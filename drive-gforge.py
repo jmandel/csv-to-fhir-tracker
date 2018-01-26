@@ -32,16 +32,9 @@ validate_fields = {
  'Disposition': ('Ballot Resolution', None)
 }
 
-ballot_values = {
- 'core': '2016-Sept Core',
- 'ccda': '2016-Sept CCDA',
- 'cqf': '2016-Sept CQF',
- 'daf': '2016-Sept DAF',
- 'daf-r': '2016-Sept DAF-R',
- 'sdc': '2016-Sept SDC',
- 'qicore': '2016-Sept QI-Core',
- 'fluentpath': '2016-Sept Fluentpath'
-}
+required_fields = ["Comment Number", "Summary", "URL", "Disposition Comment or Retract/Withdraw details"]
+
+ballot_values = json.load(open("ballot_values.json"))
 
 #  Manual tweaks
 #  core: remote empty col R, remove \n from "Comment Number"
@@ -79,6 +72,9 @@ def read_comments(inputs):
                 c["URL"] = re.sub(r"\s+", " ", c["URL"])
                 c["Section"] = re.sub(r"\s+", " ", c["Section"])
                 ret[slug] = comments
+                for k in required_fields:
+                    if k not in c:
+                        load_errors.append("Can't find field %s"%k)
 
                 for k,(v, mapper) in validate_fields.iteritems():
                     for found_val in re.split('\s*,\s*', c[k]):
@@ -91,7 +87,7 @@ def read_comments(inputs):
     if load_errors:
         for e in load_errors:
             print e
-        raise "Load errors, aborting"
+        raise Exception("Load errors, aborting")
     print header
 
     return ret
@@ -399,6 +395,7 @@ def regenerate_select_validators():
 def login():
     username = os.getenv('GFORGE_USERNAME')
     password = os.getenv('GFORGE_PASSWORD')
+    print("u", username)
     driver.get("http://gforge.hl7.org/gf/account/?action=Login")
     username_box = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "input[name='username']")))

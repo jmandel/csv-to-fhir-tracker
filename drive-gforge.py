@@ -297,7 +297,7 @@ def create_tracker_item(item):
     summary_val = ""
     if item["Summary"]:
         summary_val += "%s - "%item["Summary"]
-    summary_val += "2016-09 %s #%s "%(item["slug"], item["Comment Number"])
+    summary_val += "%s #%s "%(ballot_values[item['slug']], item["Comment Number"])
     summary_field = driver.find_element(By.NAME, "summary")
     summary_field.send_keys(summary_val)
 

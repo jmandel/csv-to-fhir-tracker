@@ -88,7 +88,7 @@ ConceptMap.group.target 1..1",Code system for source and target must be provided
 43,FHIR Core,,,,,,EntryDefinition,,http://hl7.org/fhir/2018Jan/entrydefinition.html,NEG,Clarification,,EntryDefinition,N/A,The name EntryDefinition doesn't give an implementer a hint on how/where this resource will be used.,Update EntryDefinition with meaningful name,,,,,,Orders & Observations,,,,,,,,,,,,,"Mr. Chris Hills
  ","PEO DHMS-DOD/VA IPO
  ",Brett Marquard ,brett@riverrockassociates.com ,,,,,,
-44,FHIR Core,,,,,,Composition,,http://hl7.org/fhir/2018Jan/catalog.html,NEG,Clarification,,"Introduction:
+44,FHIR Core,,,,,,Composition,,http://hl7.org/fhir/2018Jan/catalog.html,NEG,Clarification,,"Introduction: 
 The official URL for this profile is:",N/A,"Add background, scope and usage, and examples for the Catalog profile",Improve description of Catalog Profile,,,,,,Structured Documents,,,,,,,,,,,,,"Mr. Chris Hills
  ","PEO DHMS-DOD/VA IPO
  ",Brett Marquard ,brett@riverrockassociates.com ,,,,,,
@@ -150,16 +150,16 @@ The official URL for this profile is:",N/A,"Add background, scope and usage, and
 
 Patient.gender
 
-Definition
+Definition 
 Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes.
 
-Requirements
+Requirements 
 Needed for identification of the individual, in combination with (at least) name and birth date. Gender of individual drives many clinical processes.
-
-Comments
+ 
+Comments 
 The gender might not match the biological sex as determined by genetics, or the individual's preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than M and F, though the vast majority of systems and contexts only support M and F. Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific gender aspect of interest (anatomical, chromosonal, social, etc.) However, because these observations are infrequently recorded, defaulting to the administrative gender is common practice. Where such defaulting occurs, rule enforcement should allow for the variation between administrative and biological, chromosonal and other gender aspects. For example, an alert about a hysterectomy on a male should be handled as a warning or overrideable error, not a ""hard"" error.
-
-
+ 
+ 
 ","
 
 
@@ -171,7 +171,7 @@ The gender might not match the biological sex as determined by genetics, or the 
 
 
 
-Requirements
+Requirements 
 Needed for identification of the individual, in combination with (at least) name and birth date.","Suggest you remove the statement ""Gender of individual drives many clinical processes."" since this contradicts your comments on ""Administrative Gender"", e.g. (The basic gender included in Patient.gender has a limited use, that of the administrative gender: the gender that the patient is considered to have for administration and record keeping purposes.)
 
 To support your statement ""Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific gender aspect of interest (anatomical, chromosomal, social, etc.)."" suggest referring to LOINC codes for Sex assigned at birth (768909) since it may be different from the current Administrative Gender.  Also suggest adding reference to LOINC code for Gender Identity in this section.
@@ -185,7 +185,7 @@ The provider may report Administrative Gender as ""Other"" and send the current 
 Suggest adding 'mapping' for LOINC code 76689-9 Sex assigned at birth (https://s.details.loinc.org/LOINC/76689-9.html?sections=Comprehensive) and 76691-5 Gender identity (https://s.details.loinc.org/LOINC/76691-5.html?sections=Comprehensive).
 
 ",,Normative-NonSubstantive,,,,Patient Administration,,,,,,,,,,,,,Freida Hall ,Quest Diagnostics ,Freida Hall ,freida.x.hall@questdiagnostics.com ,,,,,,
-93,FHIR Core,,8.1.7,,,,Patient,,http://hl7.org/fhir/2018Jan/patient.html#gender,A-S,Clarification,,"Tracking a patient's gender presents a number of challenges due to biological variations, differing cultural expectations and legal restrictions, and the availability of various kinds of gender re-assignment. The basic gender included in Patient.gender has a limited use, that of the administrative gender: the gender that the patient is considered to have for administration and record keeping purposes. In addition, to this gender, other kinds of gender may be represented:
+93,FHIR Core,,8.1.7,,,,Patient,,http://hl7.org/fhir/2018Jan/patient.html#gender,A-S,Clarification,,"Tracking a patient's gender presents a number of challenges due to biological variations, differing cultural expectations and legal restrictions, and the availability of various kinds of gender re-assignment. The basic gender included in Patient.gender has a limited use, that of the administrative gender: the gender that the patient is considered to have for administration and record keeping purposes. In addition, to this gender, other kinds of gender may be represented: 
 
 •Birth Sex - the sex assigned at birth / on the birth registration. Some countries allow variations such as not yet determined, unknown, or undifferentiated, while others do not. The US realm defines a US Specific extension for this for Meaningful Use
 
@@ -253,12 +253,12 @@ add bullet point: As part of a search's Bundle response containing information a
 142,FHIR Core,,,,,,Appointment,,,NEG,Enhancement,,,,"There should be some connection between serviceCategory and serviceType
 ","There should be some connection between serviceCategory and serviceType
 ",,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Divya Ahuja ,divya.ahuja1@ge.com ,,,,,,
-143,FHIR Core,,,,,,Appointment,,,NEG,Correction,,,,"Instead of adding patient in participant list, it should be added as additional field in appointment.
-","Instead of adding patient in participant list, it should be added as additional field in appointment.
+143,FHIR Core,,,,,,Appointment,,,NEG,Correction,,,,"Instead of adding patient in participant list, it should be added as additional field in appointment. 
+","Instead of adding patient in participant list, it should be added as additional field in appointment. 
 ",,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Divya Ahuja ,divya.ahuja1@ge.com ,,,,,,
 144,FHIR Core,,,,,,Appointment,,,NEG,Enhancement,,,,"Also, there can be field which specifies if the appointment created is between patient and practitioner or between 2 practitioners.
 ",Field to identify whether patient-practitioner or multi-practitioner appointment,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Divya Ahuja ,divya.ahuja1@ge.com ,,,,,,
-145,FHIR Core,,,,,,Appointment,,,NEG,Enhancement,,,,"Appointment type current has values CHECKUP, EMERGENCY, FOLLOWUP, ROUTINE, WALKIN. There is no code listed which could be used when appointment is scheduled between 2 practitioners to discuss some case. There can be some code added for such appointment types.
+145,FHIR Core,,,,,,Appointment,,,NEG,Enhancement,,,,"Appointment type current has values CHECKUP, EMERGENCY, FOLLOWUP, ROUTINE, WALKIN. There is no code listed which could be used when appointment is scheduled between 2 practitioners to discuss some case. There can be some code added for such appointment types. 
 ",Need appointment type for practitioner discussion,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Divya Ahuja ,divya.ahuja1@ge.com ,,,,,,
 146,FHIR Core,,,,,,Appointment,,,NEG,Enhancement,,,,"Minutes duration can be less than the difference between start and end. If minute duration is less than difference then there should be some field where we can specify actual start and actual end time of appointment.
 ",Support actual start/end,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Divya Ahuja ,divya.ahuja1@ge.com ,,,,,,
@@ -284,14 +284,14 @@ add bullet point: As part of a search's Bundle response containing information a
 162,FHIR Core,,,,,,DocumentReference,,,NEG,Correction,,,,(Suggestion)As the cardinality of DocumentReference.content and DocumentReference.status is 1..* and 1..1. Cardinality for    DocumentReference.type/documentReference.class shouldn’t it be made to 1..1. ,Make DocumentReference.type and class 1..1,,,,,,Structured Documents,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Nayan Mergu ,nayan.mergu@ge.com ,,,,,,
 163,FHIR Core,,,,,,Encounter,,,NEG,Correction,,,,"Account seems to be newly added parameter, it is not yet included under supported search parameters",Add search for Encounter.account,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Nilesh Sawal ,nilesh.sawal@ge.com ,,,,,,
 164,FHIR Core,,,,,,Encounter,,,NEG,Correction,,,,"class cardinality should be 1..1 as mentioned in section 8.11.4 Notes
-                The class element describes the setting (in/outpatient etc.) in which the Encounter took place. Since this is important for interpreting the context of the encounter, choosing the appropriate business rules to enforce and for the management of the process, this element is required. Moreover in class history it is marked as 1..1, so unless it is mandatory in current encounter, there won't be way to have it mandated in history
+                The class element describes the setting (in/outpatient etc.) in which the Encounter took place. Since this is important for interpreting the context of the encounter, choosing the appropriate business rules to enforce and for the management of the process, this element is required. Moreover in class history it is marked as 1..1, so unless it is mandatory in current encounter, there won't be way to have it mandated in history 
 ",Encounter.class should be 1..1,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Nilesh Sawal ,nilesh.sawal@ge.com ,,,,,,
 165,FHIR Core,,,,,,FamilyMemberHistory,,,NEG,Correction,,,,"Date- Date when the family member history was recorded or Last updated
 Onset date/age/gender and age of patient currently not captured as part of our family history clinical form
 ",Clarify FamilyMemberHistory.date meaning,,,,,,Patient Care,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Rashmi MS ,Rashmi.MS@ge.com ,,,,,,
 166,FHIR Core,,,,,,Location,,,NEG,Enhancement,,,,"phonetic search parameter is supported in Organization, maybe it can also be supported in Location
 ",Add phonetic search for Location,,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Nilesh Sawal ,nilesh.sawal@ge.com ,,,,,,
-167,FHIR Core,,,,,,Location,,,NEG,Enhancement,,,,"if location is supposed to be open on all days, then from valueset
+167,FHIR Core,,,,,,Location,,,NEG,Enhancement,,,,"if location is supposed to be open on all days, then from valueset 
 http://hl7.org/fhir/ValueSet/days-of-week we would have to select multiple values, support for code 'all' would be beneficial.
 ","Add ""all"" to days-of-week",,,,,,Patient Administration,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Nilesh Sawal ,nilesh.sawal@ge.com ,,,,,,
 168,FHIR Core,,,,,,MedicationAdministration,,,NEG,Enhancement,,,,"dosage - Can we have 'Dosage' as type similar to MedicationStatment instead of BackboneElement.
@@ -306,8 +306,8 @@ Search parameter",Make unit of measure a search parameter,,,,It already is as pa
 173,FHIR Core,,,,,,MedicationStatement,,,NEG,Enhancement,,,,"effective[x]
 approx date/time may be needed -
 Scenario:
-The date/time or interval when the medication is/was/will taken -
-If information resource is patient, Patient may not remember exact date when
+The date/time or interval when the medication is/was/will taken - 
+If information resource is patient, Patient may not remember exact date when 
 he took that medication
 ",Allow approximate date for MedicationStatement,,,,,,Pharmacy,,,,,,,,,,,,,Keith Boone ,GE Healthcare ,Abhijeet Badale ,abhijeet.badale@ge.com ,,,,,,
 174,FHIR Core,,,,,,Organization,,,NEG,Enhancement,,,,"Abbreviated form of Organization name can be introduced as a field
@@ -365,8 +365,8 @@ When performing search on onset related content, it is important to NOTE potenti
 200,FHIR Core,,,,,,,documentation,http://hl7.org/fhir/2018Jan/documentation.html,A-S,Clarification,,No key for the symbol N,Provide guidance for keys used,Provide guidance for keys used,There isn't any guidance for the symbol .,,Normative-NonSubstantive,,,,FHIR Infrastructure,,,,,,,,,,,,,Melanie Edwards ,CMS ,,Melanie.Edwards@cms.hhs.gov ,,,,,,
 201,FHIR Core,,Diagnostics,,,,,index,http://hl7.org/fhir/2018Jan/,A-T,,,"Observation, Report, Specimen, ImagingStudy, Genomics, etc","Observation, Report, Specimen, ImagingStudy, Genomics, etc."," etc is missing a period
 ",Include a period after etc.,,_Typo,,,,FHIR Infrastructure,Persuasive,Auto-approved,,,,,,,,,,,Melanie Edwards ,CMS ,,Melanie.Edwards@cms.hhs.gov ,,,,,,
-202,FHIR Core,,Resources/Structure / Card,,,,,index,http://hl7.org/fhir/2018Jan/,A-S,Clarification,,,,"There is no reference provide for what is meant by cardinality here. For example: Not used, required, optional etc.
-","There is no reference provide for what is meant by cardinality here. For example: Not used, required, optional etc.
+202,FHIR Core,,Resources/Structure / Card,,,,,index,http://hl7.org/fhir/2018Jan/,A-S,Clarification,,,,"There is no reference provide for what is meant by cardinality here. For example: Not used, required, optional etc. 
+","There is no reference provide for what is meant by cardinality here. For example: Not used, required, optional etc. 
 ",,Normative-NonSubstantive,,,,FHIR Infrastructure,,,,,,,,,,,,,Melanie Edwards ,CMS ,,Melanie.Edwards@cms.hhs.gov ,,,,,,
 203,FHIR Core,,,,,,Observation,,,NEG,Enhancement,,,,"Suggest adding an attribute to an Observation representing the ""focal point"" of the observation. The focal point will represent what the observation is ""about"" when the observation is focused on something more specific than a particular body site on the patient. The focal point of an observation is something associated with the patient, such as a condition of the patient, the patient's environment, diet, or behavior, an allergy of the patient, a procedure, process, ot intervention. Examples include the size of a wound, the presence of allergens in the patient's home, the viral load associated with an HIV infection, measurement of disease activity in systemic lupus. Currently, only a BodySite can act as the focal point of an observation in the sense described here, although we note there is an inconsistent method of making observations about a device of a patient, where the Subject is replaced by the device, and then patient associated with the observation can only be determined by referring to the patient in the device resource. It would be more consistent if the Subject were always the patient, and instead of bodySite, there were a ""focal point"" attribute which could identify specifically what the observation was about, including a body site, device, condition, allergy, location, environment, intervention, encounter, behavior, etc. The option that the Subject could be an implanted Device would also be removed replaced by the ""focal point"" attribute.",Add Observation.focalPoint,Yes,Normative-Substantive,,,,Orders & Observations,,,,,,,,,,,,,Mark Kramer ,MITRE ,,mkramer@mitre.org ,,,,,,
 204,FHIR Core,,,,,,OperationDefinition,datatypes,http://hl7.org/fhir/2018Jan/valueset-all-types.html,NEG,Correction,,,,"The value set ""valueset-all-types"" should not be taken normative because future breaking changes - such as renaming of an immature resource - are possible. An example of a breaking change is the current renaming of BodySite to BodyStructure.",all-types can't be normative when resource names may change,,Normative-Substantive,,,,FHIR Infrastructure,,,,,,,,,,,,,Mark Kramer ,MITRE ,,mkramer@mitre.org ,,,,,,

@@ -10,5 +10,6 @@
 
 #python ../drive-gforge.py --tracker 677 --csvfile core.csv --slug core --do-creates --do-updates
 #python ../drive-gforge.py --tracker 677 --csvfile immunization.csv --slug immunizations --do-creates --do-updates
+# python ../drive-gforge.py --tracker 677 --csvfile qicore.csv --slug qicore --do-creates --do-updates
 
 kill %1

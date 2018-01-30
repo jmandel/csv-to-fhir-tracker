@@ -1,11 +1,5 @@
 {
  "core": "2018-Jan Core",
- "ccda": "2016-Sept CCDA",
- "cqf": "2016-Sept CQF",
- "daf": "2016-Sept DAF",
- "daf-r": "2016-Sept DAF-R",
- "sdc": "2016-Sept SDC",
- "qicore": "2016-Sept QI-Core",
- "fluentpath": "2016-Sept Fluentpath",
+ "qicore": "2018-Jan QI-Core",
  "immunizations": "2018-Jan Immunizations"
 }

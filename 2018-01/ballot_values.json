@@ -2,5 +2,7 @@
  "core": "2018-Jan Core",
  "uscore": "2018-Jan US-Core",
  "qicore": "2018-Jan QI-Core",
- "immunizations": "2018-Jan Immunizations"
+ "immunizations": "2018-Jan Immunizations",
+ "vhd": "2018-Jan VHD",
+ "eCR": "2018-Jan eCR"
 }

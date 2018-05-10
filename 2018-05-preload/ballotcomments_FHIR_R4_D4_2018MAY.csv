@@ -1,0 +1,268 @@
+,Ballot Submission,,,,,,,,,,,,,,,,,Triage & Committee Resolution,,,,,,,,,,,,,,,,,Ballot Comment Tracking,,,,,,,,,
+"Comment 
+Number",Ballot,Chapter,Section,Page #,Line #,Artifact ID,Resource(s),HTML Page name(s),URL,Vote and Type,Sub-category,Tracker #,Existing Wording,Proposed Wording,Ballot Comment,Summary,In person resolution requested,Comment grouping,Schedule,Triage Note,Pubs,Disposition WG,Disposition,"Disposition Comment
+or
+Retract/Withdraw details",Disposition/Retract/ Withdrawal Date,Mover / seconder,For ,Against,Abstain,Retracted / Withdrawn,Disposition External Organization,Responsible Person,Change Applied,Substantive Change,Submitted By,Organization,On behalf of,Commenter Email,Submitter Tracking ID,Referred To,Received From,Notes,,
+1,FMG,,,,,,DiagnosticReport,,http://hl7.org/fhir/2018May/diagnosticreport.html ,NEG,Enhancement,,"conclusion, codedDiagnosis (attribute names)","finding, codedFinding  (new attribute names)","The term ‘finding’ is ambiguous across FHIR resources, as follows. 
+
+The DiagnosticReport description starts with “The findings and interpretation of diagnostic tests” but it’s unclear whether findings refer to the result attribute’s referenced observations or to the conclusion & codedDiagnosis attributes. Furthermore, in the attribute name ‘codedDiagnosis’, the included term ‘diagnosis’ seems more advanced on the clinical reasoning process than just finding or (interpretation), so it's somewhat inconsistent with the above description.
+ 
+Diagnosis in turn is typically captured by the Condition resource, however, in the Condition description, finding is also mentioned in one of the examples where it is equated with diagnosis: “It can be used to record information about a disease/illness identified from application of clinical reasoning over the pathologic and pathophysiologic findings (diagnosis)”. However, the essence of Condition seems to be more on problems, disorders, diseases, etc., per the resource description and most of the examples included there. 
+
+In the Observation resource, the finding concept is mentioned for the first time in section 10.1.4.4.3 (Interoperability Issues using code value pairs in FHIR), but is not defined nor clrearly distinguished from the concept of observation itself. In one of the patterns suggesting to bind the code attribute to the SNOMED CD terms with semantic type of clinical finding (a SNOMED top level hierarchy), the spec seems to be blurring the distinction between findings and observable information items like those defined by another SNOMED top level hierarchy of ‘Observable entity’ (Code 363787002).
+
+Thus, finding seems to be an elusive concept and is so perhaps due to being the intermediate level of conclusion, somewhere between discrete observation’s interpretation and a more established diagnosis, captured in a Condition resource. For example, several abnormal ECG observations may be associated with a suspected atrial fibrillation finding, but to establish a paroxysmal atrial fibrillation diagnosis, there got to be a few of such findings appeared in specific certainty, order and timing, etc, as defined in clinical guidelines. 
+
+The DiagnosticReport.codedDiagnosis is bound to SNOMED Clinical finding hierarchy (the same as in one of the aforementioned Observation code-value pair patterns), but in DiagnosticReport the binding is at the spec level itself, and thus seems more substantial to this resource. Therefore, it is proposed that the DiagnosticReport resource will be described as the main placeholder to capture the concept of finding in a more explicit way. To this end, the ballot proposal is add description and calrity in this spirit, and to rename the conclusion and codedDiagnosis attributes to finding and codedFinding respectively, so that they reflect the finding ‘nature’ of DiagnosticReport backbone (i.e., code, results and conclusion). 
+
+In this way, the distinction between the terms of observation, finding and condition will be made clearer, at least within the scope of DiagnosticReport. To complete this change, there got to be more clarity in Observation and Condition about finding, and that might be submitted in separate ballot comments, however, if this ballot comment is found persuasive, then DiagnosticReport will become the focal point of findings.",Make DiagnosticReport the finding placeholder,Yes,,,,,,,,,,,,,,,,,,Amnon Shabo (Shvo) ,Philips ,,,,,,,,
+2,FMG,Resource Careplan,,,,,CarePlan,,,A-S,,,,,The Careplan should include the time an date it was created.,The Careplan should include the time an date it was created.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+3,FMG,,12.18.1.1.,,,,,operations,,A-S,,,,,"The return should be either a CarePLan or a reference to a Careplan stored in the repo. Alternatively, async method of bulk-export should be allowed for this operation.","The return should be either a CarePLan or a reference to a Careplan stored in the repo. Alternatively, async method of bulk-export should be allowed for this operation.",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+4,FMG,Clinical Reasoning,14.0.1.1,,,,,clinicalreasoning-module,,A-Q,,,"1. Sharing - The ability to represent clinical knowledge artifacts such as decision support rules, order sets, clinical protocols, and quality measures, and to do so in a way that enables those artifacts to be shared across organizations",,"Define Organizations. Organizations as in (healthcare) payers, care providers, medical/pharmaceutical industry, governmental institutions and such? all stakeholders involved in providing optimal care to populations/patients?",Define Organizations. ,,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+5,FMG,Clinical Reasoning,14.0.1.1,,,,,clinicalreasoning-module,,A-S,,,Expression Logic - the representation of logic using languages such as FHIRPath and Clinical Quality Language (CQL).,,Add references/links to FHIRPath and Clinical Quality Language (CQL),Add references/links to FHIRPath and Clinical Quality Language (CQL),Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+6,FMG,Clinical Reasoning,14.0.1.2,,,,,clinicalreasoning-module,,A-Q,,,"From the perspective of a Knowledge Evaluation Service Provider, this module defines operations and profiles in support of evaluating quality measures, and defining a service for guidance request and response, consistent with the approach taken by the current Decision Support Service   specification.",,Is this possible? --TBD,Is this possible? --TBD,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+7,FMG,Clinical Reasoning,14.0.2.1 ,,,,,clinicalreasoning-module,,A-Q,,,"GuidanceResponse:
+Represents the response to a specific guidance request returned by the $evaluate operation.",,On what resource? I think this is old text and no longer valid.,On what resource? I think this is old text and no longer valid.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+8,FMG,Clinical Reasoning,14.1.1,,,,,clinicalreasoning-module,,A-C,,,This general pattern is used to represent expression logic throughout the resources in the Clinical Reasoning module and allows expression logic to be represented at different levels,,Not true for Measure criteria,Not true for Measure criteria,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+9,FMG,Clinical Reasoning,14.1.1.1,,,,,clinicalreasoning-module,,A-S,,,"<dynamicValue>
+  <description value=""Now""/>
+<dynamicValue>",,"Missing language element.
+Suggestion: no library – defaults to FHIRPath, single library – use library language.","Missing language element.
+Suggestion: no library – defaults to FHIRPath, single library – use library language.",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+10,FMG,Clinical Reasoning,14.1.1.3,,,,,clinicalreasoning-module,,A-Q,,,"<dynamicValue>
+  <path value=""reasonCode""/>
+  <language value=""text/cql""/>
+  <expression value=""mmi-suiciderisk-orderset-logic/RiskAssessmentScore""/>
+</dynamicValue>",,"How to represent quotes, like in figure or with \”?","How to represent quotes, like in figure or with \”?",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+11,FMG,Clinical Reasoning,14.1.2,,,,,clinicalreasoning-module,,A-S,,,"For FHIRPath expressions, the expression is evaluated with the containing resource using the %context environment variable. For example, when evaluated against a Patient resource, the following expression will return all given elements of all name elements for the patient:",,Recommend to use PlanDefinition or ActivityDefinition as Patient does not support expressions.,Recommend to use PlanDefinition or ActivityDefinition as Patient does not support expressions.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+12,FMG,Clinical Reasoning,14.1.2.1,,,,,clinicalreasoning-module,,A-Q,,,"If the expression uses parameters, a Library SHALL be used to define the required parameters.",,Is this really needed? ,Is this really needed? ,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+13,FMG,Clinical Reasoning,14.1.2.1,,,,,clinicalreasoning-module,,A-Q,,,"For example, in the $apply operation, parameters defined by libraries can be provided as named parameters in the operation invocation. For more details on how parameter binding occurs within each context, refer to the specific documentation for the $apply, $evaluate, and $evaluate-measure operations.",,Are we saying – parameters in operations map to parameters as defined in the operation definitions? This is different for measures where MeasurePeriod is used.,Are we saying – parameters in operations map to parameters as defined in the operation definitions? This is different for measures where MeasurePeriod is used.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+14,FMG,Clinical Reasoning,14.1.2.2,,,,,clinicalreasoning-module,,A-Q,,,Entire paragraph,,Where is this used in the current CDS context? KNART?,Where is this used in the current CDS context? KNART?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+15,FMG,Clinical Reasoning,14.3,,,,,clinicalreasoning-module,,NEG,,,,,"Unclear how to deal with information, hybrid and pure computational. All map to RequestGroup?","Unclear how to deal with information, hybrid and pure computational. All map to RequestGroup?",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+16,FMG,Clinical Reasoning,14.3.0.1.1 ,,,,,clinicalreasoning-module,,A-T,,,"related to the mappings example: scopingEntityId Identifier.system com.clinica
+
+",,Should be an URI.,Should be an URI.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+17,FMG,Clinical Reasoning,"14.3.0.1.3
+",,,,,clinicalreasoning-module,,NEG,,,"Each action definition can specify relationships to other actions, allowing timings and offsets to be expressed.",,Unclear whether these are informational only or also used in calculations?,Unclear whether these are informational only or also used in calculations?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+18,FMG,Clinical Reasoning,"14.3.0.1.3
+",,,,,clinicalreasoning-module,,A-T,,,"fragment on a simple referral creation action:
+<reference value=""#referralToMentalHealthCare""/>",,Definition references are canonicals and not references.,Definition references are canonicals and not references.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+19,FMG,Clinical Reasoning,14.3.0.1.3.1,,,,,clinicalreasoning-module,,A-S,,,"Each action may specify the type of action to perform:
+• Create
+• Update
+• Remove
+• Fire Event
+The Create, Update, and Remove actions indicate that particular resources should be created, updated, or removed, and the Fire Event action indicates that a particular named event should be triggered.
+",,"Tracing of what has been done could be improved by including an “Action” object as a backbone element in RequestGroup as RequestGroup.activity.outcomeRefence
+Action:
+    source – Reference( resource ) –target of action
+    target – resource result of RG action.,
+    Type – create-update-remove-fireEvent
+",Tracing of what has been done could be improved by including an “Action” object as a backbone element in RequestGroup as RequestGroup.activity.outcomeRefence,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+20,FMG,Clinical Reasoning,14.3.0.1.3.2,,,,,clinicalreasoning-module,,A-S,,,,,"When a plan definition is applied, are all actions checked against conditions or only the ones without an trigger? Proposal: ignore triggers.","When a plan definition is applied, are all actions checked against conditions or only the ones without an trigger? Proposal: ignore triggers.",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+21,FMG,Clinical Reasoning,14.3.0.1.3.2,,,,,clinicalreasoning-module,,NEG,,,"Each action may have any number of triggers associated to indicate what events should trigger the action to be taken. The following types of triggers may be defined:
+• Named Event
+• Scheduled Event
+• Data Event
+",,"When an event is triggered within the FHIR repo, what will happen? Will the PD be run with no Patient or Encounter context?
+Where will the resulting Careplan go?
+
+Alternative – limit to CDS Hooks named-events?
+
+When only inspected when run – other checks can be done in the context of the condition check.
+","When an event is triggered within the FHIR repo, what will happen? ",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+22,FMG,Clinical Reasoning,14.3.0.1.3.3,,,,,clinicalreasoning-module,,A-T,,,"<condition>
+  <expression value=""NoScreening""/>
+</condition>",,Include language specification.,Include language specification.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+23,FMG,Clinical Reasoning,14.3.0.4,,,,,clinicalreasoning-module,,NEG,,,Entire Paragraph,, How will this work? In what context will this be run?  Where will the results be stored?, How will this work? In what context will this be run?  Where will the results be stored?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+24,FMG,Clinical Reasoning,14.3.0.4,,,,,clinicalreasoning-module,,A-T,,,"""~"" in examples",,"~ is mentioned as referring to the result resource. Didn't we agree that this should be ""this""?","~ is mentioned as referring to the result resource. Didn't we agree that this should be ""this""?",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+25,FMG,Clinical Reasoning,14.3.0.5 ,,,,,clinicalreasoning-module,,A-T,,,"For example, the following fragment illustrates the items in a suicide risk order set:   
+
+ <reference value=""#referralToMentalHealthCare""/>",,Contained resources not possible for canonicals,Contained resources not possible for canonicals,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+26,FMG,Resource PlanDefinition,12.18,,,,ActivityDefinition,,,A-Q,,,Canonical,,References have been replaced by canonicals. Please include the type that is referenced in the cannonical indication.,References have been replaced by canonicals. Please include the type that is referenced in the cannonical indication.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,Philips Healthcare ,,,,,,,,
+27,FMG,Resource PlanDefinition,12.18,,,,ActivityDefinition,,,A-Q,,,Canonical,,References have been replaced by canonicals. Shouldn’t canonicals be a special case within a Reference? This allows the use of contained resources and local references as well as direct references.,References have been replaced by canonicals. Shouldn’t canonicals be a special case within a Reference? This allows the use of contained resources and local references as well as direct references.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,Philips Healthcare ,,,,,,,,
+28,FMG,Clinical Reasoning,14.3.0.7,,,,,clinicalreasoning-module,,A-S,,,,,An example should be added of a Plan Definition that refers to a questionnaire and generates results based on the results.,An example should be added of a Plan Definition that refers to a questionnaire and generates results based on the results.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+29,FMG,Clinical Reasoning,14.3.0.7,,,,,clinicalreasoning-module,,A-Q,,,"  <extension url=""http://hl7.org/fhir/StructureDefinition/cqif-cqlExpression"">
+    <valueString value=""CalculateTotalScore""/>
+  </extension>
+",,When is the expression executed?,When is the expression executed?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+30,FMG,Clinical Reasoning,14.3.0.7,,,,,clinicalreasoning-module,,A-S,,,"  <type value=""choice""/>
+  <required value=""true""/>
+  <options>
+    <reference value=""ValueSet/http://loinc.org/vs/LL358-3""/>
+    <display value=""Patient Health Questionnaire (PHQ-9) Not at all/Several days/More than half the days/Nearly every day""/>
+  </options>
+</item>
+",,Seems to be unneeded for the example.,Seems to be unneeded for the example.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+31,FMG,Clinical Reasoning,14.3.0.8,,,,,clinicalreasoning-module,,NEG,,,,,Criteria use a different pattern than is expressed in the dynamic language specification. Suggest to align.,Criteria use a different pattern than is expressed in the dynamic language specification. Suggest to align.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+32,FMG,Clinical Reasoning,14.5.1,,,,RequestGroup,,,A-S,,,,,Needed? Refer to CDS Hooks spec instead. This will allow having two representations of the same spec.,Needed? Refer to CDS Hooks spec instead. This will allow having two representations of the same spec.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+33,FMG,Clinical Reasoning,14.5.1.2,,,,RequestGroup,,,NEG,,,GuidanceRespons/Requestgroup,,"As CDS Hooks will be the main CDS interface within HL7, I suggest to merge all CDSHooks  responsesinto RequestGroup; allow inclusion of the CDSHooks response structures (Cards, Decisions, …) in RequestGroup.","As CDS Hooks will be the main CDS interface within HL7, I suggest to merge all CDSHooks  responsesinto RequestGrou",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+34,FMG,Clinical Reasoning,14.5.2.1,,,,RequestGroup,,,NEG,,,"Within FHIR, the concept of a hook can be represented using a combination of TriggerDefinition and ParameterDefinition",,"Why would we want to?
+Trigger Definition is needed.
+","Why would we want to?
+Trigger Definition is needed.
+",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+35,FMG,Clinical Reasoning,14.5.2.2,,,,RequestGroup,,,NEG,,,"CDS Hooks Element FHIR Mapping
+PlanDefinition.data-requirement",,Or add a specific field for this? If CDS Hook is supported we should adjust the spec to match.,Or add a specific field for this? If CDS Hook is supported we should adjust the spec to match.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+36,FMG,Clinical Reasoning,14.6.1.2.2,,,,MeasureReport,,,A-Q,,,"For quality measures that contain multiple populations, the criteria are specified once for each group. The id attribute of the group element is used to uniquely identify the group within the measure, as well as within the quality reporting results.",,"Multiple InitialPopulations? As in this case otherwise the Stratifier element can be used... Or do they refer to defining the InitialPopulation consisting of multiple populations? As QM are already specific in defining the population of interest. 
+Or is meant just having multiple population fields?",Multiple InitialPopulations? InitialPopulation consisting of multiple populations? Or is meant just having multiple population fields?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+37,FMG,Clinical Reasoning,14.6.3.1,,,,MeasureReport,,,A-Q,,,"In addition, each group will contain stratifiers with a value stratum for each value defined by the stratifier criteria, for each criteria defined in the measure.",,does this mean that stratisfier always relates to a value set or boolean? Integers and doublesbooleans are not allowed?,does this mean that stratisfier always relates to a value set or boolean? Integers and doublesbooleans are not allowed?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+38,FMG,Clinical Reasoning,14.6.3.3,,,,MeasureReport,,,A-Q,,,"For each of those patients, the List will contain a reference to an individual-level report for that patient",,What about very large populations ? you would have for example 20000 references included in the measure report ?,What about very large populations ? you would have for example 20000 references included in the measure report ?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+39,FMG,Clinical Reasoning,14.11.2,,,,Measure,,,A-Q,,,"As such, the Measure resource defines only the top-level populations and references CQL expressions for the actual criteria.",,Is elm no longer supported?,Is elm no longer supported?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+40,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,A-Q,,,STRUCTURE: subject[x],,How does this work in CQL. context Patient is supported the other ones are less clear.,How does this work in CQL. context Patient is supported the other ones are less clear.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+41,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,NEG,,,STRUCTURE: subject[x],,The spec is clear on Patient parsing. For the othber ones tha other part of the spect ofting refer to patient based measurs where subject should be used instead.,The spec is clear on Patient parsing. For the othber ones tha other part of the spect ofting refer to patient based measurs where subject should be used instead.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+42,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,A-S,,,,,"Add element on measure resource related to Meaningful Measures domain (https://www.cms.gov/Medicare/Quality-Initiatives-Patient-Assessment-Instruments/QualityInitiativesGenInfo/MMF/General-info-Sub-Page.html) as defined by CMS
+
+Meaningful Measurement Areas are the connectors between CMS Strategic Goals and individual measures/initiatives that demonstrate how high quality outcomes for patients are being achieved.",Add element on measure resource related to Meaningful Measures domain (https://www.cms.gov/Medicare/Quality-Initiatives-Patient-Assessment-Instruments/QualityInitiativesGenInfo/MMF/General-info-Sub-Page.html) as defined by CMS,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+43,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,A-S,,,"scoring
+0..1 
+CodeableConcept
+proportion | ratio | continuous-variable | cohort
+MeasureScoring (Extensible)
+
+",,This defines the type of measure. A measure can have multiple groups. Why mandate that all of them have the same type? Shouldn’t this be a group attribute?,This defines the type of measure. A measure can have multiple groups. Why mandate that all of them have the same type? Shouldn’t this be a group attribute?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+44,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,A-S,,,"criteria
+1..1 
+string
+The name of a valid referenced CQL expression (may be namespaced) that defines this population criteria
+",,Only CQL? I suggest to use the pattern described in dynamic language and include a language indication.,Only CQL? I suggest to use the pattern described in dynamic language and include a language indication.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+45,FMG,Clinical Reasoning,14.11.3,,,,Measure,,,NEG,,,,,How the information enclosed in the supplmentalData element is to be used is unclear form the provided information.,How the information enclosed in the supplmentalData element is to be used is unclear form the provided information.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+46,FMG,Clinical Reasoning,14.11.6,,,,Measure,,,A-Q,,,"Measure.publisher
+This item SHOULD be populated unless the information is available from context.",,What context? And why not always populate it ?,What context? And why not always populate it ?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+47,FMG,Clinical Reasoning,14.11.6,,,,Measure,,,A-Q,,,"Measure.description
+(e.g. the language of the profile is presumed to be the predominant language in the place the profile was created).
+",,Don’t understand how this relates to the previous part of the sentence. Does this assume measures are always profiled ?,Don’t understand how this relates to the previous part of the sentence. Does this assume measures are always profiled ?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+48,FMG,Clinical Reasoning,14.11.6,,,,Measure,,,A-S,,,Measure.rationale,,"How does this element relate to the element purpose or usage or description ?
+
+Purpose: Explanation of why this measure is needed and why it has been designed as it has.
+
+Rationale: Provides a succinct statement of the need for the measure
+
+Why do we need explicit fields for all these attributes.
+If so please indicate source.
+",How does this element relate to the element purpose or usage or description ?,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+49,FMG,Clinical Reasoning,14.11.6,,,,Measure,,,A-C,,,"Measure.guidance
+Measure developers must be able to provide additional guidance for implementers to understand the intent with greater specificity than that provided in the logic of the measure.",,"Probably logic refers to the logic included in the Library object.
+Refering to the library as logic is not clear. ","Probably logic refers to the logic included in the Library object.
+Refering to the library as logic is not clear. ",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+50,FMG,Clinical Reasoning,14.11.1.1,,,,Measure,,,NEG,,,This is not an idempotent operation,,"From ClinicalReasoning-quality-reporting:
+
+The $evaluate-measure operation has the following properties:
+Idempotent The operation may be invoked multiple times without side effects. Note that the result of invoking the operation may vary over time if patient data used in the eMeasure changes between invocations. Note also that the parameters supplied with the operation invocation can affect the results.
+
+Ambigue, what behavior is intended?","Ambigue, what behavior is intended?",Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+51,FMG,Clinical Reasoning,14.11.1.1,,,,Measure,,,A-S,,,"Out Parameters
+return: MeasureReport",,"It should also be possible to return a reference to where a measure report is stored.
+
+Also relates to measurereport.status == pending
+
+Alternatively, async method of bulk-export should be allowed for this operation.",It should also be possible to return a reference to where a measure report is stored.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+52,FMG,Clinical Reasoning,12.18,,,,ActivityDefinition,,,,,,"Out Parameters
+return: CarePlan",,"The return should be either a Careplan or a reference to a Careplan stored in the repo.
+Alternatively, async method of bulk-export should be allowed for this operation.
+",The return should be either a Careplan or a reference to a Careplan stored in the repo.,Yes,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,Philips Healthcare ,,,,,,,,
+53,FMG,Body Structure,10.9,,,,BodyStructure,,,A-S,,,,,"The name of the resource is ambigu. The resource is not descibing a BodyStructure but information related a body structure in specific patient.
+Something like BodyStructureObservation would be better.",The name of the resource is ambigu. The resource is not descibing a BodyStructure but information related a body structure in specific patient.,No,,,,,,,,,,,,,,,,,,Bas van den Heuvel ,+31 6 20110450 ,,,,,,,,
+54,FMG,,,,,,,,,A-Q,,16062,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+55,FMG,,,,,,,,,NEG,,16063,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+56,FMG,,,,,,,,,NEG,,16097,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+57,FMG,,,,,,,,,NEG,,16098,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+58,FMG,,,,,,,,,NEG,,16099,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+59,FMG,,,,,,,,,NEG,,16100,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+60,FMG,,,,,,,,,NEG,,16065,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+61,FMG,,,,,,,,,NEG,,16101,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+62,FMG,,,,,,,,,A-C,,16501,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+63,FMG,,,,,,,,,A-T,,16102,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+64,FMG,,,,,,,,,A-S,,16103,,,,,,,,,,,,,,,,,,,,,,,Bob Milius ,National Marrow Donor ,,,,,,,,
+65,FMG,,,,,,,,,A-C,,16124,,,,,,,,,,,,,,,,,,,,,,,Kevin Geminiuc ,,,,,,,,,
+66,FMG,,,,,,,,,A-C,,16125,,,,,,,,,,,,,,,,,,,,,,,Kevin Geminiuc ,,,,,,,,,
+67,FMG,,,,,,,,,A-Q,,16126,,,,,,,,,,,,,,,,,,,,,,,Kevin Geminiuc ,,,,,,,,,
+68,FMG,,,,,,,,,NEG,,16171,,,,,Yes,,,,,,,,,,,,,,,,,,Brian Reinhold ,"Lamprey Networks, Inc. ",,,,,,,,
+69,FMG,,,,,,,,,NEG,,16172,,,,,Yes,,,,,,,,,,,,,,,,,,Brian Reinhold ,"Lamprey Networks, Inc. ",,,,,,,,
+70,FMG,,,,,,,,,A-C,,16074,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+71,FMG,,,,,,,,,A-Q,,16076,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+72,FMG,,,,,,,,,A-T,,16077,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+73,FMG,,,,,,,,,A-C,,16078,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+74,FMG,,,,,,,,,A-C,,16083,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+75,FMG,,,,,,,,,A-C,,16084,,,,,,,,,,,,,,,,,,,,,,,Chris Hills ,DoD/VA IPO ,,,,,,,,
+76,FMG,,,,,,,,,NEG,,15930,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+77,FMG,,,,,,,,,NEG,,15931,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+78,FMG,,,,,,,,,NEG,,15932,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+79,FMG,,,,,,,,,NEG,,15936,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+80,FMG,,,,,,,,,NEG,,15937,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+81,FMG,,,,,,,,,NEG,,15938,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+82,FMG,,,,,,,,,NEG,,15939,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+83,FMG,,,,,,,,,NEG,,15940,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+84,FMG,,,,,,,,,NEG,,15941,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+85,FMG,,,,,,,,,NEG,,15942,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+86,FMG,,,,,,,,,NEG,,15943,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+87,FMG,,,,,,,,,NEG,,15944,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+88,FMG,,,,,,,,,NEG,,15945,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+89,FMG,,,,,,,,,NEG,,15970,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+90,FMG,,,,,,,,,NEG,,15971,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+91,FMG,,,,,,,,,NEG,,16064,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+92,FMG,,,,,,,,,NEG,,16424,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+93,FMG,,,,,,,,,NEG,,16473,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+94,FMG,,,,,,,,,NEG,,16475,,,,,,,,,,,,,,,,,,,,,,,Floyd Eisenberg ,,,,,,,,,
+95,FMG,,,,,,,,,A-S,,16048,,,,,,,,,,,,,,,,,,,,,,,François Macary ,PHAST / HL7 France ,,,,,,,,
+96,FMG,,,,,,,,,A-T,,16049,,,,,,,,,,,,,,,,,,,,,,,François Macary ,PHAST / HL7 France ,,,,,,,,
+97,FMG,,,,,,,,,A-T,,16050,,,,,,,,,,,,,,,,,,,,,,,François Macary ,PHAST / HL7 France ,,,,,,,,
+98,FMG,,,,,,,,,A-S,,16051,,,,,,,,,,,,,,,,,,,,,,,François Macary ,PHAST / HL7 France ,,,,,,,,
+99,FMG,,,,,,,,,NEG,,16044,,,Questionnaires may be forms that require an inline signature when the form has legal standing. Having a Provenance Resource that references a signing ceremony is not sufficient in a legal context. This meets the 80% rule for any use of Questionnaire as a contract type form. Please add a Signature datatype to Questionnaire to support this requirement. ,Add Questionnaire.signature with Signature datatype.,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Kathleen Connor  ,kathleen_connor@comcast.net ,,,,,,
+100,FMG,,,,,,,,,NEG,,16045,,,Questionnaires may be forms that require an inline signature when the form has legal standing. Having a Provenance Resource that references a signing ceremony is not sufficient in a legal context. Please add a Signature datatype to QuestionnaireResponse to support this requirement.,Add QuestionnaireResponse.signature with Signature datatype.,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Kathleen Connor  ,kathleen_connor@comcast.net ,,,,,,
+101,FMG,,9.1,,,,AllergyIntolerance,,,A-C,,,,,Agree with the discussion in this section/subsectoins-it will be critical to follow the implementaitons and additional clarifications as this is a source of patient safety mishaps,I limited review to the level 3 resources for this section,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Keith Salzman ,keith.salzman@bookzurman.com ,,,,,,
+102,FMG,,9.2,,,,Condition,,,A-C,,,,,"The section is well written and thoughful regarding the use of ""condition"" but requires feedback from implementations with careful attention to the rules of use so that unnecessary constraints or lack of constraints don't render the resource ineffective. The concept of any condition that is followed over time pending a diagnosis will be helpful in gathering evidence for index cases, case reports and establishiing a diagnosis (the history of HIV/AIDS is a good example) where having established codes that can be searched may reveal a trend of ""conditions"" that heralds an emerging disease or disease entity ",,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Keith Salzman ,keith.salzman@bookzurman.com ,,,,,,
+103,FMG,,9.3,,,,Procedure,,,A-A,,,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Keith Salzman ,keith.salzman@bookzurman.com ,,,,,,
+104,FMG,,9.3.2,,,,Procedure,,,A-C,,,,,"The example used for changing the mental state of the patient by training or counseling, while the intent of the intervention, seems to be on the fringe of what most clinicians would consider a procedure. Electro Convulsive Therapy (ECT) would clearly be a procedure while I am not sure that a counseling session would be, though I would defer to a psychiatrist or counselar to have them affirm or modify the use of the term here-CPT codes may be a place that supports this use case as a procedure...",,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Keith Salzman ,keith.salzman@bookzurman.com ,,,,,,
+105,FMG,,9.0.5,,,,,clinicalsummary-module,,A-T,,,,,the and ServiceRequest Resources should be: the ServiceRequest Resources,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Keith Salzman ,keith.salzman@bookzurman.com ,,,,,,
+106,FMG,,,,,,,,,NEG,,16193,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+107,FMG,,,,,,,,,NEG,,16195,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+108,FMG,,,,,,,,,NEG,,16196,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+109,FMG,,,,,,,,,NEG,,16190,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+110,FMG,,,,,,,,,NEG,,16192,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+111,FMG,,,,,,,,,A-S,,16350,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+112,FMG,,,,,,,,,NEG,,16346,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+113,FMG,,,,,,,,,NEG,,16352,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+114,FMG,,,,,,,,,NEG,,16351,,,,,Yes,,,,,,,,,,,,,,,,,,Greg Staudenmaier  ,US Department of Veterans Affairs ,Ioana Singureanu  ,ioana.singureanu@bookzurman.com ,,,,,,
+115,FMG,,,,,,,,,A-S,,16519,,,,,,,,,,,,,,,,,,,,,,,Jason Walonoski ,The MITRE Corporation ,,,,,,,,
+116,FMG,,,,,,,,,A-S,,16518,,,,,,,,,,,,,,,,,,,,,,,Jason Walonoski ,The MITRE Corporation ,,,,,,,,
+117,FMG,,,,,,,,,A-Q,,16516,,,,,,,,,,,,,,,,,,,,,,,Jason Walonoski ,The MITRE Corporation ,,,,,,,,
+118,FMG,,,,,,,,,NEG,,16314,,,,,Yes,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+119,FMG,,,,,,,,,NEG,,14413,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+120,FMG,,,,,,,,,NEG,,14465,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+121,FMG,,,,,,,,,NEG,,14478,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+122,FMG,,,,,,,,,NEG,,14479,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+123,FMG,,,,,,,,,NEG,,14480,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+124,FMG,,,,,,,,,NEG,,14000,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+125,FMG,,,,,,,,,A-T,,16374,,,,,,,,,,,,,,,,,,,,,,,Jenni Syed ,Cerner ,,,,,,,,
+126,FMG,,,,,,,,,NEG,,16145,,,,,,,,,,,,,,,,,,,,,,,"Kensaku Kawamoto, MD, PhD, MHS ",University of Utah ,,,,,,,,
+127,FMG,,,,,,,,,NEG,,16146,,,,,,,,,,,,,,,,,,,,,,,"Kensaku Kawamoto, MD, PhD, MHS ",University of Utah ,,,,,,,,
+128,FMG,,,,,,,,,NEG,,16147,,,,,,,,,,,,,,,,,,,,,,,"Kensaku Kawamoto, MD, PhD, MHS ",University of Utah ,,,,,,,,
+129,FMG,,,,,,,,,NEG,,16148,,,,,,,,,,,,,,,,,,,,,,,"Kensaku Kawamoto, MD, PhD, MHS ",University of Utah ,,,,,,,,
+130,FMG,,,,,,,,,A-S,,16345,,,,,,,,,,,,,,,,,,,,,,,Luis Maas ,EMR Direct ,,,,,,,,
+131,FMG,,,,,,EntryDefinition,,,NEG,Correction,,,,"This resource should not exist.  ""Wrappers"" are not allowed in FHIR.  Every resource must stand alone and be interpretable and processable without access to referenced resources.  As well, identifiers, classifications, relationships, etc. belong with the item, not as part of a catalogue.  A catalogue can group items, but can't change their characteristics.  A medication in a catalog is a medication instance and all information about that catalogue item belongs on the Medication instance itself - the Medication instance might be catalogue-specific.",Drop EntryDefinition,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+132,FMG,,,,,,"ProcessRequest,ProcessResponse",,,NEG,,,,,"These resources overlap in functionality with Task and with standard RESTful query capabilities.  Cancel is a type of task.  A request to cancel a prescription, lab order or to initiate discharge proceedings for an Encounter would be handled as a Task.  Cancelling a Claim or other financial event should be no different.  Requesting re-processing (re-execution of an operation) can also be performed using Task.  Where business processing has been requested, Task represents that fulfillment process and can thus convey the business state of execution.  As such ""status"" is inappropriate either - just query for the Task associated with processing the request - as is done for all other workflows.  Finally, polling is a type of query and should use either the RESTful query mechanism or an operation, not a resource.",ProcessRequest/ProcessResponse should not exist,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+133,FMG,,,,,,DeviceComponent,,,NEG,,,,,It's not clear why separating DeviceComponent from Device is necessary.  Devices can have properties and requiring a separate resource in order to capture properties results in unnecessary complexity.,Fold DeviceComponent into Device,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+134,FMG,,,,,,,,,NEG,Correction,,,,"OccupationalData is a collection of Observations.  It is part of a family of several hundred or more similar types of data where a collection of questions related to a particular topic are gathered and passed around as a group.  Other examples include prenatal records, nursing charts, etc.  FHIR *cannot* have separate resources for each of these areas.  The needs will need to be met through some combination of questionnaires, logical models and mapping of data to other resources - principly Observations.  (As a note, this information has historically been captured in most systems as observations.)",OccupationalData should not exist as a resource,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+135,FMG,,,,,,VisionPrescription,,,NEG,Correction,,,,"Everything in VisionPrescription can now be adequately expressed using DeviceRequest.  Orders for eyeglasses are no more special than orders for prosthetics, wheelchairs or other parameterized devices - and we're not going to have separate resources for each category of device.  As such, VisionPrescription should be withdrawn and replaced with a profile on DeviceRequest",Drop VisionPrescription in favor of parameterized DeviceRequest,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+136,FMG,,,,,,"EligibilityRequest,EligibilityResponse,EnrolmentRequest,EnrollmentResponse",,,NEG,Correction,,,,"EligibilityRequest is either too broadly named or too narrowly defined.  There are numerous processes in healthcare that involve checking for eligibility and enrollment processes, including clinical trials, monitoring programs, group therapy sessions, etc.  The resources should either be generalized to allow these other uses, or should be named specific to Coverage (e.g. CoverageEligibilityRequest).  Please engate with PatientCare and OO to evaluate the appropriateness of generalizing these resources.",Generalize or rename Eligibility and Enrollment resources,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+137,FMG,,,,,,"EligibilityResponse,EnrollmentResponse,ClaimResponse",,,NEG,Correction,,,,"All FHIR resources that are intended to be persisted must be able to be usefully interpreted and actioned on a stand-alone basis without other resources being available.  For example, a ""pre-determination"" or ""pre-authorization"" might be sent to a downstream system to support an eventual claim or a payor might wish to provide an un-requested pre-authorization for a service it had algorithmically determined was appropriate/needed.  Whether this is current practice or not, ""event"" resources should never pre-suppose the existence of a request.  The only exception in FHIR is non-persisted (throw-away) responses to operations such as OperationOutcomes or Parameters.",Response' doesn't allow for resources to stand alone,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+138,FMG,,,,,,GuidanceResponse,,,NEG,Correction,,,,"FHIR resources that are intended to be persisted must be able to stand alone without any access to any referenced resources.  As defined, a GuidanceResponse cannot be intepreted independently of the definition of the decision support service the call was made to.  That's ok if GuidanceResponse acts like a Parameters resource which is never persisted and simply wraps the information (contraindications, recommended orders, etc.) coming back from the decision support engine.  If so, this should be clarified (and it should be explained why GuidanceResponse isn't just a profile on Parameters).  If not, then enough information needs to be included in GuidanceResponse that it could be passed alone to a downstream system and that system would be able to understand and act on the CDS recommendation.",GuidanceResponse is problematic as a stand-alone resource,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+139,FMG,,,,,,MedicinalProductClinicals,,,NEG,Correction,,,,"This is collecting a bunch of pieces of knowedge, each of which should be an independent statement with its own status.  Interactions, side effects, indications are all ""knowledge"" statements that might be made asserted by some domain expert with an assertion of level of evidence, authority source, etc.  And such statements can be made about a variety of therapies and interventions.  This needs to be decomposed (and perhaps collapsed into a single knowledge resource) with discussion with the CDS work group.  Having a collection resource like this with this level of specificity is not viable for FHIR.",Split MedicinalProductClinicals,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+140,FMG,,,,,,"MedicinalProduct, MedicinalProductClinicals, MedicinalProductDeviceSpec, MedicinalProductIngredient, MedicnalProductPharmaceutical, SubstancePolymer, SubstanceReferenceInformation, SubstanceSpecification",,,NEG,Correction,,,,"The number of proposed MedicinalProduct/Substance resources is non-sustainable As part of the alignment with the MedicationKnowledge pattern, effort should be made to collapse many of these resources into a single resource that can be profiled to meet the project requirements.  As well, information such as manufacturing details, regulatory approval, etc. might be split off into resources that can be stated generaicly about all types of products, not something specific to medications.",Collapse MedicinalProduct/Substance definition resources,Yes,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+141,FMG,,,,,,ItemInstance,,,NEG,Correction,,,,"This smacks of data modeling over implementer practice.  Resources need to reflect what implementers *do*, not what we believe they ""should"" do.  Lot number, etc. live on the Device or Medication resource and can't be maintained independently.  (As well, nothing here actually says what the instance is, no explains how it relates to Patient.",Drop ItemInstance,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+142,FMG,,,,,,(many),,,NEG,Correction,,,,"All canonical declarations should be qualified in a similar manner to Reference.  For example ElementDefinition.type.profile should be canonical(StructureDefinition,ImplementationGuide), not just canonical.  The only time canonical should appear alone is if the intention is that all knowledge/structure resources are considered valid targets.",Make canonical references specific,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+143,FMG,,,,,,OrganizationRole,,,A-Q,,,,,We've changed all resources to reference PractitionerRole in addition to Practitioner.  Do we need to do the same thing with OrganizationRole everwywhere we've had Organization?,Do we need OrganizationRole everywhere?,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+144,FMG,,,,,,,(many),,A-S,Correction,,,,"The publication process should change smart quotes, elipses, emdashes and other similar characters that come from MS-Word pasted content into standard quotes, regular dashes, etc. so that all content is consistent (and so search works better)",Replace special characters with normal characters,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+145,FMG,,,,,,,(many),,A-S,Correction,,,,Non-breaking spaces and tabs should be converted into regular spaces before trimming content when processing Excel files.  Right they cause problems.,Ignore non-breaking spaces and tabs in Excel content,,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Lloyd McKenzie ,lmckenzie@gevityinc.com ,,,,,,
+146,FMG,,3.1.0.15,,,,,RESTful API,https://www.hl7.org/fhir/2018May/http.html#search,NEG,Correction,,"in addition to the get based search method above, servers that support search SHALL also support a POST based search:
+
+","in addition to the get based search method above, servers that support search SHOULD also support a POST based search:
+
+","As the owner/oparator of Provincial EHR assets, the development, testing, and rollout of both GET and POST service functionality in a high-complexity integrated environment is very resource-intensive. When working with known integration partners and client users, it is easy to negotiate support for just GET or POST, and not necessarily both. Anecdotally, we have three FHIR-capable Provincial EHR Assets in production that only require HTTP GET for search (with more on the way). There have been no client requests for support of HTTP POST for Search, and thus no meaningful justification for the cost to implement a POST service for each of those assets, aside from being deemed ""FHIR-Conformant"".","Reduce FHIR Search Conformance requirement from ""SHALL support both get & post"" to ""SHOULD support both get & post""",,,,,,,,,,,,,,,,,,,Melva Peters ,HL7 Canada ,Ken Sinn ,ken.sinn@ehealthontario.ca ,,,,,,
+147,FMG,,,,,,,(NA),,A-A,,,,,"Work with the Orders and Observation UDI team to resolved the recommendations for the Device resource changes for the device kind and instance, and multiple device identifiers.","Work with the Orders and Observation UDI team to resolved the recommendations for the Device resource changes for the device kind and instance, and multiple device identifiers.",,,,,,,,,,,,,,,,,,,Mitra Rocca ,Food and Drug Administration ,,,,,,,,
+148,FMG,,,,,,,,,A-Q,,16433,,,,,,,,,,,,,,,,,,,,,,,Reinhard Egelkraut ,HL7 Austria ,,,,,,,,
+149,FMG,,,,,,,,,NEG,,16365,,,,,,,,,,,,,,,,,,,,,,,Robert Hausam ,Hausam Consulting LLC ,,,,,,,,
+150,FMG,,,,,,,,,NEG,,16366,,,,,,,,,,,,,,,,,,,,,,,Robert Hausam ,Hausam Consulting LLC ,,,,,,,,
+151,FMG,,,,,,,,,NEG,,16520,,,,,,,,,,,,,,,,,,,,,,,Robert Hausam ,Hausam Consulting LLC ,,,,,,,,
+152,FMG,,,,,,,,,A-C,,16521,,,,,,,,,,,,,,,,,,,,,,,Robert Hausam ,Hausam Consulting LLC ,,,,,,,,

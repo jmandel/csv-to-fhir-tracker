@@ -16,4 +16,8 @@
 
 #python ../drive-gforge.py --tracker 677 --csvfile ecr.csv --slug eCR --do-creates --do-updates
 
+#TODO
+python ../drive-gforge.py --tracker 677 --csvfile pocd.csv --slug PoCD --do-creates --do-updates
+python ../drive-gforge.py --tracker 677 --csvfile phd.csv --slug phd --do-creates --do-updates
+
 kill %1

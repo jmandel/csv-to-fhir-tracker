@@ -250,9 +250,9 @@ def set_specification(item):
         select_all(select_box("Specification"),[s], "Ballot", item)
 
 def set_submitter(item):
-    if item["On behalf of"]:
-        s = item["On behalf of"]
-        select_all(select_box("Real Submitter"),[s], "On behalf of", item)
+    submitter = item["On behalf of"] or item["Submitted By"]
+    if submitter:
+        select_all(select_box("Real Submitter"),[submitter], "On behalf of", item)
 
 
 def set_url(item):
@@ -447,6 +447,8 @@ try:
         old_log = json.load(input_log)
 except: pass
 
+if args.slug not in ballot_values:
+    print("Ballot values doesn't have %s"%args.slug)
 
 input_comments = read_comments([{'slug': args.slug, 'file': args.csvfile}])[args.slug]
 if not (args.do_creates or args.do_updates):

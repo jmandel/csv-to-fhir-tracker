@@ -1,0 +1,20 @@
+{
+"core-stu": "2018-May Core STU",
+"core-norm-infrastructure": "2018-May Core Norm Infrastructure",
+"core-norm-conformance": "2018-May Core Norm Conformance",
+"core-norm-observation": "2018-May Core Norm Observation",
+"core-norm-patient": "2018-May Core Norm Patient",
+"fhirpath": "2018-May FHIRPath",
+"breastcancer": "2018-May Breast Cancer",
+"genomics": "2018-May Genomics",
+"hai": "2018-May HAI",
+"ips": "2018-May IPS",
+"medication": "2018-May Medication",
+"ecr": "2018-Jan eCR",
+"immunizations": "2018-Jan Immunizations",
+"phd": "2018-Jan PHD",
+"pocd": "2018-Jan PoCD",
+"qicore": "2018-Jan QI-Core",
+"uscore": "2018-Jan US-Core",
+"vhd": "2018-Jan VHD"
+}

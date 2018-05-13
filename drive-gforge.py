@@ -22,14 +22,15 @@ import time
 # disposition comment or retract/withdarw -> resolution comment
 
 validate_fields = {
- 'On behalf of': ('Real Submitter',None),
- 'Comment grouping': ('Group',None),
- 'Resource(s)': ('Resource(s)',None),
- 'Ballot': ('Specification',None),
- 'Schedule': ('Schedule',None),
- 'HTML Page name(s)': ('HTML Page(s)',None),
- 'Disposition WG': ('Reviewing Work Group', None),
- 'Disposition': ('Ballot Resolution', None)
+ 'On behalf of': (lambda c: c['On behalf of'], 'Real Submitter',None),
+ 'Submitted By': (lambda c: c['On behalf of'] or c['Submitted By'],'Real Submitter',None),
+ 'Comment grouping': (lambda c: c['Comment grouping'],'Group',None),
+ 'Resource(s)': (lambda c: c['Resource(s)'],'Resource(s)',None),
+ 'Ballot': (lambda c: c['Ballot'],'Specification',None),
+ 'Schedule': (lambda c: c['Schedule'],'Schedule',None),
+ 'HTML Page name(s)': (lambda c: c['HTML Page name(s)'],'HTML Page(s)',None),
+ 'Disposition WG': (lambda c: c['Disposition WG'],'Reviewing Work Group', None),
+ 'Disposition': (lambda c: c['Disposition'],'Ballot Resolution', None)
 }
 
 required_fields = ["Comment Number", "Summary", "URL", "Disposition Comment or Retract/Withdraw details"]
@@ -76,8 +77,8 @@ def read_comments(inputs):
                     if k not in c:
                         load_errors.append("Can't find field %s"%k)
 
-                for k,(v, mapper) in validate_fields.iteritems():
-                    for found_val in re.split('\s*,\s*', c[k]):
+                for k,(extractor, v, mapper) in validate_fields.iteritems():
+                    for found_val in re.split('\s*,\s*', extractor(c)):
                         if not found_val: continue
                         found_val = found_val.lower()
                         if found_val.lower() not in select_options[v]:
@@ -86,7 +87,7 @@ def read_comments(inputs):
     #load_errors = set(load_errors)
     if load_errors:
         for e in load_errors:
-            print e
+            print e.encode('ascii', 'ignore').decode('ascii')
         raise Exception("Load errors, aborting")
     print header
 

@@ -18,7 +18,9 @@
     "medication/16", 
     "medication/17", 
     "medication/18", 
-    "medication/19"
+    "medication/19", 
+    "medication/20", 
+    "medication/21"
   ], 
   "notes": [
     "... created medication/1 as tracker #16624", 
@@ -46,6 +48,8 @@
     "Specification mismatch: medication/17: Tracker item 16327 has US Pharmacy instead of ", 
     "... updated medication/17 as tracker #16327", 
     "... created medication/18 as tracker #16652", 
-    "... created medication/19 as tracker #16655"
+    "... created medication/19 as tracker #16655", 
+    "... created medication/20 as tracker #17161", 
+    "... created medication/21 as tracker #17162"
   ]
 }

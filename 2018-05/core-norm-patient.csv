@@ -77,3 +77,4 @@ This data element, paired with country of origin and ethnicity are powerful dete
 This information is extremely important in providing patient-centred and culturally sensitive/appropriate healthcare services
 Some region of Australia (and many other countries) has high mix of migrant and refugee population. This data element must be included
 ","The Patient resource does not include ""year of arrival"" as a core element or extension",,,,,,,,,,,,,,,,,,,Stephen Chu ,HL7 Australia ,,,,,,,,
+54,FHIR Core,,,,,,Patient,,,NEG,Enhancement,,,,"Marital codes identified do not clearly delineate current marital status.","Marital codes identified do not clearly delineate current marital status.",,,,,,,,,,,,,,,,,,,Steve Eichner ,Department of State Health Services ,,,,,,,,

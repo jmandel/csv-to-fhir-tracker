@@ -91,3 +91,4 @@ Environmental observation in cases of thunderstorm asthma. Observation findings 
 ""method can impact results and is thus used for determining whether results can be compared or determining significance of results""
 Base on this description, this element qualifies to be treated as a modifier. Rationale:
 An element is labeled ""Is-Modifier = true"" if the value it contains may change the interpretation of the element that contains it ",Observation.method should be treated as a modifier,,,,,,,,,,,,,,,,,,,Stephen Chu ,HL7 Australia ,,,,,,
+72,,,,,,,,,,NEG,,16517,,,,,,,,,,,,,,,,,,,,,,,Mark Kramer ,MITRE ,,,,,,

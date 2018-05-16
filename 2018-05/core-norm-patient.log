@@ -46,7 +46,8 @@
     "core-norm-patient/50", 
     "core-norm-patient/51", 
     "core-norm-patient/52", 
-    "core-norm-patient/53"
+    "core-norm-patient/53", 
+    "core-norm-patient/54"
   ], 
   "notes": [
     "Value mismatch on core-norm-patient/6: field On behalf of, couldn't find Chris Brancato", 
@@ -115,6 +116,7 @@
     "Specification mismatch: core-norm-patient/51: Tracker item 16341 has FHIR Core instead of ", 
     "... updated core-norm-patient/51 as tracker #16341", 
     "... created core-norm-patient/52 as tracker #16620", 
-    "... created core-norm-patient/53 as tracker #16621"
+    "... created core-norm-patient/53 as tracker #16621", 
+    "... created core-norm-patient/54 as tracker #17186"
   ]
 }

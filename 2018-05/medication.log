@@ -20,7 +20,10 @@
     "medication/18", 
     "medication/19", 
     "medication/20", 
-    "medication/21"
+    "medication/21", 
+    "medication/22", 
+    "medication/23", 
+    "medication/24"
   ], 
   "notes": [
     "... created medication/1 as tracker #16624", 
@@ -50,6 +53,9 @@
     "... created medication/18 as tracker #16652", 
     "... created medication/19 as tracker #16655", 
     "... created medication/20 as tracker #17161", 
-    "... created medication/21 as tracker #17162"
+    "... created medication/21 as tracker #17162", 
+    "... created medication/22 as tracker #17195", 
+    "... created medication/23 as tracker #17196", 
+    "... created medication/24 as tracker #17197"
   ]
 }

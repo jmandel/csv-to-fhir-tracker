@@ -63,7 +63,8 @@
     "core-norm-observation/68", 
     "core-norm-observation/69", 
     "core-norm-observation/70", 
-    "core-norm-observation/71"
+    "core-norm-observation/71", 
+    "core-norm-observation/72"
   ], 
   "notes": [
     "... created core-norm-observation/1 as tracker #16680", 
@@ -158,6 +159,8 @@
     "Specification mismatch: core-norm-observation/69: Tracker item 16035 has FHIR Core instead of ", 
     "... updated core-norm-observation/69 as tracker #16035", 
     "... created core-norm-observation/70 as tracker #16825", 
-    "... created core-norm-observation/71 as tracker #16829"
+    "... created core-norm-observation/71 as tracker #16829", 
+    "Specification mismatch: core-norm-observation/72: Tracker item 16517 has FHIR Core instead of ", 
+    "... updated core-norm-observation/72 as tracker #16517"
   ]
 }

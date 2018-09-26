@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from selenium.webdriver.chrome.options import Options
+
 import sys
 import os
 import argparse
@@ -87,7 +88,7 @@ def read_comments(inputs):
     #load_errors = set(load_errors)
     if load_errors:
         for e in load_errors:
-            print e.encode('ascii', 'ignore').decode('ascii')
+            print "ERR: ", e.encode('ascii', 'ignore').decode('ascii')
         raise Exception("Load errors, aborting")
     print header
 

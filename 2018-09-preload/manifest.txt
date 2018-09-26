@@ -1,0 +1,19 @@
+fhirpath,2018-Sep FHIRPath,??
+core-stu,2018-Sep Core STU,??
+core-norm-infrastructure,2018-Sep Core Norm Infrastructure,??
+core-norm-conformance,2018-Sep Core Norm Conformance,??
+core-norm-observation,2018-Sep Core Norm Observation,ballotcomments_FHIR_R4_OBS_N2_2018SEP_clean.csv
+core-norm-patient,2018-Sep Core Norm Patient,ballotcomments_FHIR_R4_PATIENT_N2_2018SEP_clean.csv
+fhirpath,2018-Sep FHIRPath,??
+breastcancer,2018-Sep Breast Cancer,??
+genomics,2018-Sep Genomics,??
+hai,2018-Sep HAI,??
+ips,2018-Sep IPS,??
+medication,2018-Sep Medication,??
+ecr,2018-Jan eCR,??
+immunizations,2018-Jan Immunizations,??
+phd,2018-Jan PHD,??
+pocd,2018-Jan PoCD,??
+qicore,2018-Jan QI-Core,??
+uscore,2018-Jan US-Core,??
+vhd,2018-Jan VHD,??

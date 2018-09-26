@@ -76,15 +76,15 @@ def read_comments(inputs):
                 ret[slug] = comments
                 for k in required_fields:
                     if k not in c:
-                        load_errors.append("Can't find field %s"%k)
+                        load_errors.append("%s - Can't find field %s"%(args.slug, k))
 
                 for k,(extractor, v, mapper) in validate_fields.iteritems():
                     for found_val in re.split('\s*,\s*', extractor(c)):
                         if not found_val: continue
                         found_val = found_val.lower()
                         if found_val.lower() not in select_options[v]:
-                            load_errors.append("Can't find %s (col %s) in %s"%(
-                                found_val, k, v))
+                            load_errors.append("%s - Can't find %s (col %s) in %s"%(
+                                args.slug, found_val, k, v))
     #load_errors = set(load_errors)
     if load_errors:
         for e in load_errors:

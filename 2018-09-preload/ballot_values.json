@@ -1,4 +1,5 @@
 {
-"core-norm-observation": "2018-Sep Core Norm Observation",
-"core-norm-patient": "2018-Sep Core Norm Patient"
+"N-Obs": "2018-Sep Core Norm Observation",
+"N-Pat": "2018-Sep Core Norm Patient",
+"N-Term": "2018-Sep Core Norm Conformance"
 }

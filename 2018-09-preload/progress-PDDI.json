@@ -1,0 +1,28 @@
+{
+  "completed": [
+    "PDDI/1", 
+    "PDDI/2", 
+    "PDDI/3", 
+    "PDDI/4", 
+    "PDDI/5", 
+    "PDDI/6", 
+    "PDDI/7", 
+    "PDDI/8", 
+    "PDDI/9", 
+    "PDDI/10", 
+    "PDDI/11"
+  ], 
+  "notes": [
+    "... created PDDI/1 as tracker #18804", 
+    "... updated PDDI/2 as tracker #18056", 
+    "... updated PDDI/3 as tracker #18057", 
+    "... updated PDDI/4 as tracker #18072", 
+    "... updated PDDI/5 as tracker #18073", 
+    "... updated PDDI/6 as tracker #18074", 
+    "... updated PDDI/7 as tracker #18078", 
+    "... updated PDDI/8 as tracker #18079", 
+    "... created PDDI/9 as tracker #18805", 
+    "... created PDDI/10 as tracker #18806", 
+    "... created PDDI/11 as tracker #18807"
+  ]
+}

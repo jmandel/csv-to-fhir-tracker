@@ -1,5 +1,10 @@
 {
-"N-Obs": "2018-Sep Core Norm Observation",
-"N-Pat": "2018-Sep Core Norm Patient",
-"N-Term": "2018-Sep Core Norm Conformance"
+ "N-Infra": "2018-Sep Core Norm Infrastructure",
+ "N-Obs": "2018-Sep Core Norm Observation",
+ "N-Pat": "2018-Sep Core Norm Patient",
+ "N-Term": "2018-Sep Core Norm Conformance",
+ "FHIRPath": "2018-Sep FHIRPath",
+ "DeQM": "2018-Sep DEQM",
+ "PDDI": "2018-Sep PDDI",
+ "VHD": "2018-Sep VHD"
 }

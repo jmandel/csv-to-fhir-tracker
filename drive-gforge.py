@@ -299,7 +299,7 @@ def create_tracker_item(item):
     summary_val = ""
     if item["Summary"]:
         summary_val += "%s - "%item["Summary"]
-    summary_val += "%s #%s "%(ballot_values[item['slug']], item["Comment Number"])
+    summary_val += "%s #%s "%(item['slug'], item["Comment Number"])
     summary_field = driver.find_element(By.NAME, "summary")
     summary_field.send_keys(summary_val)
 
@@ -450,7 +450,7 @@ try:
 except: pass
 
 if args.slug not in ballot_values:
-    print("Ballot values doesn't have %s"%args.slug)
+    print("ERR: %s - not present in Ballot values"%args.slug)
 
 input_comments = read_comments([{'slug': args.slug, 'file': args.csvfile}])[args.slug]
 if not (args.do_creates or args.do_updates):

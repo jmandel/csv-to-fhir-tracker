@@ -14,7 +14,10 @@
     "VHD/12", 
     "VHD/13", 
     "VHD/14", 
-    "VHD/15"
+    "VHD/15", 
+    "VHD/16", 
+    "VHD/17", 
+    "VHD/18"
   ], 
   "notes": [
     "... updated VHD/1 as tracker #18142", 
@@ -33,6 +36,11 @@
     "... updated VHD/12 as tracker #18272", 
     "... updated VHD/13 as tracker #18274", 
     "... updated VHD/14 as tracker #18276", 
-    "... created VHD/15 as tracker #18566"
+    "... created VHD/15 as tracker #18566", 
+    "... created VHD/16 as tracker #18808", 
+    "Value mismatch on VHD/17: field On behalf of, couldn't find Alex de Leon", 
+    "... created VHD/17 as tracker #18809", 
+    "Value mismatch on VHD/18: field On behalf of, couldn't find Alex de Leon", 
+    "... created VHD/18 as tracker #18810"
   ]
 }

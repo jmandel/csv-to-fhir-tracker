@@ -3,8 +3,12 @@
  "N-Obs": "2018-Sep Core Norm Observation",
  "N-Pat": "2018-Sep Core Norm Patient",
  "N-Term": "2018-Sep Core Norm Conformance",
+ "STU": "2018-Sep Core STU",
  "FHIRPath": "2018-Sep FHIRPath",
+ "CRD": "2018-Sep CRD",
  "DeQM": "2018-Sep DEQM",
+ "eCR": "2018-Sep eCR",
+ "ODH": "2018-Sep ODH",
  "PDDI": "2018-Sep PDDI",
  "VHD": "2018-Sep VHD"
 }

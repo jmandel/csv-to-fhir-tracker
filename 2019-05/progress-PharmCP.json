@@ -1,0 +1,24 @@
+{
+  "completed": [
+    "PharmCP/1", 
+    "PharmCP/2", 
+    "PharmCP/3", 
+    "PharmCP/4", 
+    "PharmCP/5", 
+    "PharmCP/6", 
+    "PharmCP/7", 
+    "PharmCP/8", 
+    "PharmCP/9"
+  ], 
+  "notes": [
+    "... created PharmCP/1 as tracker #22006", 
+    "... created PharmCP/2 as tracker #22009", 
+    "... created PharmCP/3 as tracker #22011", 
+    "... created PharmCP/4 as tracker #22013", 
+    "... created PharmCP/5 as tracker #22016", 
+    "... created PharmCP/6 as tracker #22020", 
+    "... created PharmCP/7 as tracker #22024", 
+    "... created PharmCP/8 as tracker #22028", 
+    "... created PharmCP/9 as tracker #22032"
+  ]
+}

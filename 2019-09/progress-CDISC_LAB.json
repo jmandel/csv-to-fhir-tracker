@@ -1,0 +1,14 @@
+{
+  "completed": [
+    "CDISC_LAB/1", 
+    "CDISC_LAB/2", 
+    "CDISC_LAB/3", 
+    "CDISC_LAB/4"
+  ], 
+  "notes": [
+    "... created CDISC_LAB/1 as tracker #24121", 
+    "... created CDISC_LAB/2 as tracker #24123", 
+    "... created CDISC_LAB/3 as tracker #24125", 
+    "... created CDISC_LAB/4 as tracker #24127"
+  ]
+}

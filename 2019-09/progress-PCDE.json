@@ -1,0 +1,28 @@
+{
+  "completed": [
+    "PCDE/5", 
+    "PCDE/13", 
+    "PCDE/54", 
+    "PCDE/55", 
+    "PCDE/56", 
+    "PCDE/57", 
+    "PCDE/58", 
+    "PCDE/59"
+  ], 
+  "notes": [
+    "... created PCDE/5 as tracker #24588", 
+    "... created PCDE/13 as tracker #24590", 
+    "Specification mismatch: PCDE/54: Tracker item 23987 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/54 as tracker #23987", 
+    "Specification mismatch: PCDE/55: Tracker item 23994 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/55 as tracker #23994", 
+    "Specification mismatch: PCDE/56: Tracker item 23995 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/56 as tracker #23995", 
+    "Specification mismatch: PCDE/57: Tracker item 23997 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/57 as tracker #23997", 
+    "Specification mismatch: PCDE/58: Tracker item 23998 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/58 as tracker #23998", 
+    "Specification mismatch: PCDE/59: Tracker item 23999 has US Minimal Common Oncology Data Elements (mCODE) instead of US Da Vinci PCDE", 
+    "... updated PCDE/59 as tracker #23999"
+  ]
+}

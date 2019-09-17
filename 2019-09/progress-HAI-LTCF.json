@@ -1,0 +1,27 @@
+{
+  "completed": [
+    "HAI-LTCF/4", 
+    "HAI-LTCF/5", 
+    "HAI-LTCF/6", 
+    "HAI-LTCF/7", 
+    "HAI-LTCF/8", 
+    "HAI-LTCF/9", 
+    "HAI-LTCF/10", 
+    "HAI-LTCF/11", 
+    "HAI-LTCF/12"
+  ], 
+  "notes": [
+    "Specification mismatch: HAI-LTCF/4: Tracker item 23725 has US Healthcare Associated Infections instead of US Healthcare Associated Infection Reports Long Term Care Facilities (HAI-LTCF)", 
+    "... updated HAI-LTCF/4 as tracker #23725", 
+    "Specification mismatch: HAI-LTCF/5: Tracker item 23726 has US Healthcare Associated Infections instead of US Healthcare Associated Infection Reports Long Term Care Facilities (HAI-LTCF)", 
+    "... updated HAI-LTCF/5 as tracker #23726", 
+    "Specification mismatch: HAI-LTCF/6: Tracker item 23727 has US Healthcare Associated Infections instead of US Healthcare Associated Infection Reports Long Term Care Facilities (HAI-LTCF)", 
+    "... updated HAI-LTCF/6 as tracker #23727", 
+    "... created HAI-LTCF/7 as tracker #24484", 
+    "... created HAI-LTCF/8 as tracker #24486", 
+    "... created HAI-LTCF/9 as tracker #24487", 
+    "... created HAI-LTCF/10 as tracker #24488", 
+    "... created HAI-LTCF/11 as tracker #24490", 
+    "... created HAI-LTCF/12 as tracker #24492"
+  ]
+}

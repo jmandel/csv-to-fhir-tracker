@@ -1,6 +1,17 @@
 {
  "CDex": "2019-Sep CDex",
+ "CDISC_LAB": "2019 Sept CDISC_LAB",
+ "CPG": "2019 Sept CPG",
+ "DTR": "2019 Sept DTR",
+ "HAI-LTCF": "2019 Sept HAI_LTCF",
  "HRex": "2019-Sep HRex",
+ "ImmDS": "2019 Sept CDS_IMMUNIZATION",
+ "IPS": "2019 Sept IPS",
+ "LIVD": "2019 Sept LIVD",
+ "MCODE": "2019 Sept MCODE",
+ "PAS": "2019 Sept PAS",
+ "PCDE": "2019 Sept PCDE",
+ "PDex": "2019-Sep PDex",
  "PDex_FORMULARY": "2019-Sep PDex_FORMULARY",
- "PDex": "2019-Sep PDex"
+ "QUALITY": "2019 Sept QUALITY"
 }
